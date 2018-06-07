@@ -22,7 +22,7 @@ function removeScript($text_full,$text_before="<script",$text_after="</script>")
 ?> 
 <!-- https://animeflv.net/browse?q=naruto -->
 <form action="search.php" method="get" >
-<input type="text" name="q" id="" placeholder="buscar">
+<input type="text" name="q" id="" placeholder="buscar" value="<?php echo $_REQUEST['q'] ?>">
 </form>
 <br>
 <?php

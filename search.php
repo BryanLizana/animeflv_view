@@ -1,8 +1,8 @@
 <?php 
 require_once('./include.php');
 
-
-$html_anime = file_get_contents('https://animeflv.net/browse?q='.$_REQUEST['q']) ;
+$url = str_replace(" ",'%20','https://animeflv.net/browse?q='.$_REQUEST['q'] );
+$html_anime = file_get_contents($url) ;
 $final = removeScript(removeScript($html_anime),'<noscript','</noscript>');
 
 $end = true;
