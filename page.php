@@ -2,6 +2,9 @@
 function converter_link(String $var = null)
 {
     
+    // $a = new SimpleXMLElement($link_clear);
+    // echo '<pre>'; var_dump( $a['href'] ); echo '</pre>'; die;/***HERE***/ 
+
     $i = strpos($var,'href="');
     $var_resto = substr($var,$i);
     $end = strpos($var_resto,'">');
@@ -21,33 +24,33 @@ function converter_link(String $var = null)
 }
 
 $html_anime = file_get_contents('https://animeflv.net'.$_REQUEST['url']) ;
-$final = str_replace( 'script','',$html_anime);
-// $final = strip_tags( $html_anime);
-// EN EMISION
-// $i = strpos($final,'<ul class="ListSdbr">');
-// $string_final = substr($final,$i);
-// $end = strpos($string_final,"</ul>");
+// Zippyshare
+$final = $html_anime;
 
 $end = true;
 
-$ini = 0;
-$link = "";
-
-while ($end && $ini < 100) {
+while ($end ) {
     
-    $i = strpos($final,'Zippyshare');
-    
+    $i = strpos($final,'<a');
     $string_final = substr($final,$i);
-    $end = strpos($string_final,"</table>");
-    $link_clear = converter_link(substr($final,$i,$end));
-    $link .= $link_clear . "<br>";
+    $end = strpos($string_final,"</a>");
+    $link_clear = substr($final,$i,$end + 4);
+
+    $link .= $link_clear .'<br>' ;
     $final  = substr($final,$i+$end);
-    $ini++;
 }
 
-echo $link;
+
+    $final = str_replace('/ver','page?url=/ver',$link);
+    $final = str_replace('/anime','page?url=/anime',$final);
+
+echo $final;
+
 // echo '<pre>'; var_dump( ($final) ); echo '</pre>'; die;/***HERE***/ 
 ?>
 
 <br>
 <a href="<?php echo  $_REQUEST['back'] ?>">atrás</a>
+    
+
+    

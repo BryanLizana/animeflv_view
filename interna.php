@@ -1,33 +1,30 @@
 <?php 
-function converter_link(String $var = null)
-{
-    try {
-        $a = new SimpleXMLElement($var);
-       return  $a['href']; // will echo www.something.com
-  
-    } catch (Exception $e) {
-      return $var;
-    } 
-    
-}
+
 
 $html_anime = file_get_contents('https://animeflv.net'.$_REQUEST['url']) ;
-$final = str_replace( 'script','',$html_anime);
-// $final = strip_tags( $html_anime);
-// EN EMISION
-// $i = strpos($final,'<ul class="ListSdbr">');
-// $string_final = substr($final,$i);
-// $end = strpos($string_final,"</ul>");
+
+$final = $html_anime;
 
 $end = true;
 
+while ($end ) {
     
-$i = strpos($final,'Lista de episodios');
+    $i = strpos($final,'<a');
+    $string_final = substr($final,$i);
+    $end = strpos($string_final,"</a>");
+    $link_clear = substr($final,$i,$end + 4);
 
-$string_final = substr($final,$i);
-$end = strpos($string_final,"</section>");
-echo str_replace('/ver','page?url=/ver',substr($final,$i,$end));
+    $link .= $link_clear .'<br>' ;
+    $final  = substr($final,$i+$end);
+}
 
+
+    $final = str_replace('/ver','page?url=/ver',$link);
+    $final = str_replace('/anime','page?url=/anime',$final);
+
+echo $final;
+
+// echo '<pre>'; var_dump( ($final) ); echo '</pre>'; die;/***HERE***/ 
 ?>
 
 <br>

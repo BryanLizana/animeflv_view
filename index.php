@@ -2,23 +2,22 @@
 
 
 $html_anime = file_get_contents('https://animeflv.net/') ;
-$final = str_replace( 'script','',$html_anime);
-// $final = strip_tags( $html_anime);
-// EN EMISION
-// $i = strpos($final,'<ul class="ListSdbr">');
-// $string_final = substr($final,$i);
-// $end = strpos($string_final,"</ul>");
+$final = $html_anime;
 
 $end = true;
 
-$ini = 0;
-$link = "";
-
-    $i = strpos($final,'<main');
+while ($end ) {
     
+    $i = strpos($final,'<a');
     $string_final = substr($final,$i);
-    $end = strpos($string_final,"</main>");
-    $final = str_replace('/ver','interna?url=/ver',substr($final,$i,$end));
+    $end = strpos($string_final,"</a>");
+    $link_clear = substr($final,$i,$end + 4);
+    $link .= $link_clear .'<br>' ;
+    $final  = substr($final,$i+$end);
+}
+
+
+    $final = str_replace('/ver','interna?url=/ver',$link);
     $final = str_replace('/anime','interna?url=/anime',$final);
 
 echo $final;
