@@ -29,19 +29,20 @@ $end = true;
 
 $ini = 0;
 $link = "";
-// while ($end && $ini < 100) {
     
     $i = strpos($final,'[url=//');
-    // https://www112.zippyshare.com/d/nGinuf6V/75/7_833.mp4
     $string_final = substr($final,$i);
     $end = strpos($string_final,"[/url]");
-    $link_clear = converter_link(substr($final,$i,$end));
-    $link .= $link_clear . "<br>";
-    $final  = substr($final,$i+$end);
-    $ini++;
-// }
+    $link_clear = converter_link(substr($final,$i + 7,$end - 7));
 
-echo $link;
+$i = strpos($final,'%1000');
+$string_final = substr($final,$i - 6);
+// https://www112.zippyshare.com/d/nGinuf6V/75/7_833.mp4
+$time = substr($string_final ,0, 6 );
 
-// echo '<pre>'; var_dump( ($final) ); echo '</pre>'; die;/***HERE***/ 
+$time = ($time % 1000 ) + 11;
+$ar = explode('file.html]',$link_clear);
+echo '<pre>'; var_dump( 'https://'.$ar[0] .$time .'/'.$ar[1] ); echo '</pre>'; die;/***HERE***/ 
+echo $link_clear;
+
 ?>
