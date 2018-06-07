@@ -19,8 +19,8 @@ while ($end ) {
 }
 
 
-    $final = str_replace('/ver','page?url=/ver',$link);
-    $final = str_replace('/anime','page?url=/anime',$final);
+    $final = str_replace('/ver','page.php?url=/ver',$link);
+    $final = str_replace('/anime','interna.php?url=/anime',$final);
 
 echo $final;
 

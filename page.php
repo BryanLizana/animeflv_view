@@ -1,27 +1,5 @@
 <?php 
-function converter_link(String $var = null)
-{
-    
-    // $a = new SimpleXMLElement($link_clear);
-    // echo '<pre>'; var_dump( $a['href'] ); echo '</pre>'; die;/***HERE***/ 
 
-    $i = strpos($var,'href="');
-    $var_resto = substr($var,$i);
-    $end = strpos($var_resto,'">');
-    if ($end) {
-        $url_clean = str_replace('href="' , '',substr($var,$i -1,$end -2 ));
-        $url_clean = str_replace('" class="Button Sm fa-downl' , '',$url_clean);
-        $url_clean = str_replace('http://ouo.io/s/y0d65LCP?s=' , '',$url_clean);
-        
-        $url_clean = urldecode($url_clean);
-        $url_clean = str_replace(' ' , '',$url_clean);
-        return '<a href="paso_final.php?url='.$url_clean.'&back='.$_SERVER['REQUEST_URI'].'">'.$url_clean.'</a>'.'   =====<a href="'.$url_clean.'" target="__black">View Site</a>';
-
-    }    else {
-        return $var;
-    }
-  
-}
 
 function removeScript($text_full,$text_before="<script",$text_after="</script>")
 {
@@ -76,8 +54,8 @@ while ($end ) {
     $final  = substr($final,$i+$end);
 }
   
-    $final = str_replace('/ver','page?url=/ver',$link);
-    $final = str_replace('/anime','page?url=/anime',$final);
+    $final = str_replace('/ver','page.php?url=/ver',$link);
+    $final = str_replace('/anime','interna.php?url=/anime',$final);
 
 echo $final;
 
