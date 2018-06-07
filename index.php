@@ -1,6 +1,6 @@
 <?php 
 
-
+ 
 $html_anime = file_get_contents('https://animeflv.net/') ;
 $final = $html_anime;
 
@@ -17,8 +17,8 @@ while ($end ) {
 }
 
 
-    $final = str_replace('/ver','interna?url=/ver',$link);
-    $final = str_replace('/anime','interna?url=/anime',$final);
+    $final = str_replace('/ver','interna.php?url=/ver',$link);
+    $final = str_replace('/anime','interna.php?url=/anime',$final);
 
 echo $final;
 
