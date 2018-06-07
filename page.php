@@ -1,24 +1,8 @@
 <?php 
 
 
-function removeScript($text_full,$text_before="<script",$text_after="</script>")
-{
-    // <script
-    // </script>
-    $end= true;
-    while ($end ) {
-    
-        $i = strpos($text_full,$text_before);
-        $string_final = substr($text_full,$i);
-        $end = strpos($string_final,$text_after);
-        $link_clear = substr($text_full,$i,($end ));
-        $text_full =  str_replace($link_clear,"",$text_full);
-    } 
-    $text_full =  str_replace($text_after,"",$text_full);
+require_once('./include.php');
 
-    return $text_full;
-
-}
 
 
 $html_anime = file_get_contents('https://animeflv.net'.$_REQUEST['url']) ;
@@ -54,16 +38,12 @@ while ($end ) {
     $final  = substr($final,$i+$end);
 }
   
-    $final = str_replace('/ver','page.php?url=/ver',$link);
-    $final = str_replace('/anime','interna.php?url=/anime',$final);
+$final = str_replace('/ver/','page.php?url=/ver/',$link);
+$final = str_replace('/anime/','interna.php?url=/anime/',$final);
 
 echo $final;
 
 // echo '<pre>'; var_dump( ($final) ); echo '</pre>'; die;/***HERE***/ 
 ?>
 
-<br>
-<a href="<?php echo  $_REQUEST['back'] ?>">atrás</a>
-    
 
-    

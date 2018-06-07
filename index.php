@@ -1,8 +1,9 @@
 <?php 
-
+require_once('./include.php');
  
 $html_anime = file_get_contents('https://animeflv.net/') ;
-$final = $html_anime;
+$final = removeScript(removeScript($html_anime),'<noscript','</noscript>');
+
 
 $end = true;
 
@@ -12,18 +13,34 @@ while ($end ) {
     $string_final = substr($final,$i);
     $end = strpos($string_final,"</a>");
     $link_clear = substr($final,$i,$end + 4);
+
+    if (strpos($link_clear,'<img')) {
+        // try {
+
+            
+        //     $ii = strpos($link_clear,'<img');
+        //     $link_clear_img = substr($link_clear,$ii);
+        //     $endi = strpos($link_clear_img,">");
+        //     $link_clear_img = substr($link_clear,$ii,$endi + 1);
+           
+        //     $link_clear = $link_clear_img ;
+             
+        //  } catch (Exception $e) {
+         
+        //  } 
+ }
+
     $link .= $link_clear .'<br>' ;
     $final  = substr($final,$i+$end);
+
+
 }
 
 
-    $final = str_replace('/ver','interna.php?url=/ver',$link);
-    $final = str_replace('/anime','interna.php?url=/anime',$final);
+$final = str_replace('/ver/','page.php?url=/ver/',$link);
+$final = str_replace('/anime/','interna.php?url=/anime/',$final);
 
 echo $final;
 
 // echo '<pre>'; var_dump( ($final) ); echo '</pre>'; die;/***HERE***/ 
 ?>
-
-<br>
-<a href="<?php echo  $_REQUEST['back'] ?>">atrás</a>
