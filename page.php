@@ -43,7 +43,7 @@ while ($end ) {
                 $url_clean = str_replace('http://ouo.io/s/y0d65LCP?s=' , '',$a['href']);
                 $url_clean = urldecode($url_clean);
                 
-                $link_clear = '<a href="paso_final?url='.$url_clean .'">'.$url_clean .'</a>'.'======<a href="'.$url_clean .'">Click To link</a>' ;
+                $link_clear = '<a href="paso_final?url='.$url_clean .'">'.$url_clean .'</a>'.'======<a href="'.$url_clean .'" target="__black">Click To link</a>' ;
                 
             } catch (Exception $e) {
             
