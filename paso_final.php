@@ -42,7 +42,21 @@ $time = substr($string_final ,0, 6 );
 
 $time = ($time % 1000 ) + 11;
 $ar = explode('file.html]',$link_clear);
-echo '<pre>'; var_dump( 'https://'.$ar[0] .$time .'/'.$ar[1] ); echo '</pre>'; die;/***HERE***/ 
-echo $link_clear;
+$url = 'https://'.str_replace('/v/','/d/',$ar[0]) .$time .'/'.$ar[1] ;
+$direccion=$url; 
+echo '<pre>'; var_dump( $url ); echo '</pre>'; die;/***HERE***/ 
+// header("Content-disposition: attachment; filename=".$ar[1]);
+// header("Content-type: MIME");
+//             $direccion=str_replace(" ","%20",$direccion); 
+//             $existe=@fopen($direccion,'r'); 
+//             if ($existe){ 
+//             echo "<font face='Verdana' size='2' color='#00FF00'>EXISTE</font>"; 
+//             fclose($existe);
+//             readfile($direccion);
+
+//             }else{ 
+//              echo "<font face='Verdana' size='2' color='#FF0000'>EXISTE</font>"; 
+//             }  
+// echo $link_clear;
 
 ?>
