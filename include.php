@@ -4,6 +4,7 @@ function removeScript($text_full,$text_before="<script",$text_after="</script>")
 {
     // <script
     // </script>
+    $text_full_bu = $text_full;
     $end= true;
     while ($end ) {
     
@@ -18,6 +19,9 @@ function removeScript($text_full,$text_before="<script",$text_after="</script>")
     } 
     $text_full =  str_replace($text_after,"",$text_full);
 
+    if (empty($text_full)) {
+        $text_full = $text_full_bu;
+    }
     return $text_full;
 
 }
