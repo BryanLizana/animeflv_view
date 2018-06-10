@@ -34,7 +34,7 @@ function removeScript($text_full,$text_before="<script",$text_after="</script>")
 <a href="https://animeflv.net<?php echo $_GET['url'] ?>" target="__black">VIEW PAGE ANIMEFLV</a>
 <br>
 <form action="search.php" method="get">
-<input name="q" type="text" id="search-anime" autocomplete="off" placeholder="Buscar...">
+<input name="q" type="text" id="search-anime" autocomplete="off" placeholder="Buscar..." value="<?php echo $_REQUEST['q'] ?>">
 <button><i class="fa-search">Buscar</i></button>
 </form>
 <div class="DpdwCnt TtCn">
