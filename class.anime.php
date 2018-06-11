@@ -3,7 +3,7 @@ class AnimeFlv
 {
 
     
-    public function removeScript($text_full,$text_before="<script",$text_after="</script>")
+    public function removeScript($text_full,$text_before="<script",$text_after="</script>",$menosSiTiene = "Palabra A coincidir que irá al final")
     {        
         $text_full_bu = $text_full;
         $end= true;
@@ -14,7 +14,7 @@ class AnimeFlv
             $end = strpos($string_final,$text_after);
             $link_clear = substr($text_full,$i,($end + strlen($text_after))); //substr ini and cuanto recorrerá apartir de ahí
             
-            if (strpos($link_clear,'https://www.mediafire.com/')) {
+            if (strpos($link_clear,$menosSiTiene)) {
                 $scrip_extra_valid = $link_clear;
             }
             
@@ -99,22 +99,23 @@ class AnimeFlv
             $value_url =  'http' . $value;               
             }
         }
-        $html_anime = file_get_contents($value_url) ;
-        $final = self::removeScript(self::removeScript($html_anime,'<noscript','</noscript>'));        
-      
-        $resto = self::getTags($final,"<script",'</script>');
-      ?> 
-        <div id="message"></div>
-        <div id="videoLoading"></div>
-        <div id="player"></div>
-        <div id="my-player"></div>
-        <input type="button" id="start" value="start">
-        <div id=""></div>
-        
-        <?php
-       echo $resto;
+        if ( isset($value_url)) {
+            $html_anime = file_get_contents($value_url) ;
+            $final = self::removeScript(self::removeScript($html_anime,'<noscript','</noscript>'),'<script','</script>','https://www.mediafire.com/');        
+          
+            $resto = self::getTags($final,"<script",'</script>');
+          ?> 
+            <div id="message"></div>
+            <div id="videoLoading"></div>
+            <div id="player"></div>
+            <div id="my-player"></div>
+            <input type="button" id="start" value="START">
+            <div id=""></div>
+            
+            <?php
+           echo $resto;
+        } 
 
-        die;
 
     }
 }
