@@ -1,0 +1,79 @@
+<?php 
+
+class AnimeFlv 
+{
+
+    
+    public function removeScript($text_full,$text_before="<script",$text_after="</script>")
+    {        
+        $text_full_bu = $text_full;
+        $end= true;
+        while ($end ) {
+            $i = strpos($text_full,$text_before);
+            $string_final = substr($text_full,$i);
+            $end = strpos($string_final,$text_after);
+            $link_clear = substr($text_full,$i,($end + strlen($text_after))); //substr ini and cuanto recorrerá apartir de ahí
+            $text_full =  str_replace($link_clear,"",$text_full);
+        } 
+    
+        if (empty($text_full)) {
+            $text_full = $text_full_bu;
+        }
+        return $text_full;
+    }
+
+
+    public function getTags($text_full,$taginit,$tagend)
+    {
+    
+        $fin = true;
+        $restoGroup = "";
+            while ($fin) {
+                $inicio = strpos($text_full,$taginit);
+                $text_trozo = substr($text_full,$inicio);
+                $fin = strpos($text_trozo,$tagend);
+                $resto = substr($text_full,$inicio,($fin + strlen($tagend)));
+                if (strpos($resto,'<img')) {
+                    // try {
+                    //     $ii = strpos($link_clear,'<img');
+                    //     $link_clear_img = substr($link_clear,$ii);
+                    //     $endi = strpos($link_clear_img,">");
+                    //     $link_clear_img = substr($link_clear,$ii,$endi + 1);
+                    //    echo '<pre>'; var_dump( $link_clear_img ); echo '</pre>'; die;/***HERE***/ 
+                    //     $link_clear = $link_clear_img ;             
+                    //  } catch (Exception $e) {         
+                    //  } 
+                }
+    
+                if (strpos($resto,'http://ouo.io/s/y0d65LCP?s=')) {
+                    try {
+                        $a = new SimpleXMLElement($resto);
+                        $url_clean = str_replace('http://ouo.io/s/y0d65LCP?s=' , '',$a['href']);
+                        $url_clean = urldecode($url_clean);                
+                        $resto = '<a href="'.$url_clean .'">'.$url_clean .'</a>'.'======<a href="'.$url_clean .'" target="__black">Click To link</a>' ;                
+                    } catch (Exception $e) {
+                        $resto = json_encode( $e );
+                    } 
+                }
+    
+                $restoGroup .= $resto .'<br>' ;
+                $text_full  = substr($text_full,$inicio+($fin + strlen($tagend)));
+            }
+    
+            if (!empty($restoGroup)) {
+    
+                // Recrear url's
+                $restoGroup = str_replace('/ver/','page.php?url=/ver/',$restoGroup);
+                $restoGroup = str_replace('/browse/','search.php?',$restoGroup);
+                $restoGroup = str_replace('/anime/','interna.php?url=/anime/',$restoGroup);
+                $restoGroup = str_replace('/uploads/','https://animeflv.net/uploads/',$restoGroup);
+                $restoGroup = str_replace('/browse?','search.php?',$restoGroup);
+                
+                return $restoGroup;
+            }else {
+                return $text_full;
+                
+            }
+    
+    }
+}

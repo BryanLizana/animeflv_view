@@ -23,7 +23,6 @@ $url_search = "search.php?q=". str_replace('-','%20',$url_search);
 }
 $final = str_replace('Rank','<a href="'.$url_search.'" target="__black">SEARCH ANIME IN FLV</a> <br>Rank',$final);
 
-
 echo  $final; die;/***DIE***/ 
 
 ?>
