@@ -1,5 +1,4 @@
 <?php 
-
 class AnimeFlv 
 {
 
@@ -8,18 +7,24 @@ class AnimeFlv
     {        
         $text_full_bu = $text_full;
         $end= true;
+        $scrip_extra_valid = "";
         while ($end ) {
             $i = strpos($text_full,$text_before);
             $string_final = substr($text_full,$i);
             $end = strpos($string_final,$text_after);
             $link_clear = substr($text_full,$i,($end + strlen($text_after))); //substr ini and cuanto recorrerá apartir de ahí
-            $text_full =  str_replace($link_clear,"",$text_full);
+            
+            if (strpos($link_clear,'https://www.mediafire.com/')) {
+                $scrip_extra_valid = $link_clear;
+            }
+            
+            $text_full =  str_replace($link_clear,"",$text_full); 
         } 
     
         if (empty($text_full)) {
             $text_full = $text_full_bu;
         }
-        return $text_full;
+        return $text_full . $scrip_extra_valid;
     }
 
 
@@ -75,5 +80,41 @@ class AnimeFlv
                 
             }
     
+    }
+
+    public function getUrlMediafire($text_full)
+    {
+        // efire.php
+        $resto = self::getTags($text_full,"src=",'" ');
+
+        $resto =  str_replace(' ','',$resto);
+        $resto =  str_replace('src="','',$resto);
+        $resto =  str_replace('allowfullscreen','',$resto);
+        $resto =  str_replace('"','',$resto);
+        $resto =  str_replace('<br>','',$resto);
+        $resto = explode('http',$resto);
+
+        foreach ($resto as  $value) {
+            if (strpos($value,'efire.php')) {
+            $value_url =  'http' . $value;               
+            }
+        }
+        $html_anime = file_get_contents($value_url) ;
+        $final = self::removeScript(self::removeScript($html_anime,'<noscript','</noscript>'));        
+      
+        $resto = self::getTags($final,"<script",'</script>');
+      ?> 
+        <div id="message"></div>
+        <div id="videoLoading"></div>
+        <div id="player"></div>
+        <div id="my-player"></div>
+        <input type="button" id="start" value="start">
+        <div id=""></div>
+        
+        <?php
+       echo $resto;
+
+        die;
+
     }
 }
