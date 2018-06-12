@@ -104,6 +104,9 @@ class AnimeFlv
             $final = self::removeScript(self::removeScript($html_anime,'<noscript','</noscript>'),'<script','</script>','https://www.mediafire.com/');        
           
             $resto = self::getTags($final,"<script",'</script>');
+
+            $resto = str_replace("$(window).width()",'"90%"', $resto);
+            $resto = str_replace("$(window).height()",'"90%"', $resto);
           ?> 
             <div id="message"></div>
             <div id="videoLoading"></div>
