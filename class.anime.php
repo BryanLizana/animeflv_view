@@ -155,12 +155,12 @@ class AnimeFlv
             $video = self::getTags($html_anime,"<video",'</video>');
             $video = self::getTags($video,'src="','" ');
 
-            $video = explode('src="',$video);
+            $video = explode('<br>',$video);
             echo '<hr>';
             foreach ($video as $url_video) {
-                $url_video =  str_replace('<br>','',$url_video);
+                $url_video =  str_replace('src=','',$url_video);
                 $url_video =  str_replace('"','',$url_video);
-                if (!empty($url_video)) {
+                if (strpos($url_video,'ttp')) {
                     echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO </a><br>';                   
                 }
             }
