@@ -33,7 +33,7 @@ class AnimeFlv
     
         $fin = true;
         $restoGroup = "";
-            while ($fin) {
+            while ($fin ) {
                 $inicio = strpos($text_full,$taginit);
                 $text_trozo = substr($text_full,$inicio);
                 $fin = strpos($text_trozo,$tagend);
@@ -119,6 +119,54 @@ class AnimeFlv
            echo $resto;
         } 
 
+
+    }
+
+    public function getUrlServerRV($text_full)
+    {
+        $resto = self::getTags($text_full,"src=",'" ');
+
+        $resto =  str_replace(' ','',$resto);
+        $resto =  str_replace('src="','',$resto);
+        $resto =  str_replace('allowfullscreen','',$resto);
+        $resto =  str_replace('"','',$resto);
+        $resto =  str_replace('<br>','',$resto);
+        $resto = explode('http',$resto);
+
+        foreach ($resto as  $value) {
+            if (strpos($value,'server=rv')) {
+            $value_url =  'http' . $value;               
+            }
+        }
+
+
+        if ( isset($value_url)) {
+            $html_anime = file_get_contents($value_url) ;
+            $final = self::removeScript(self::removeScript($html_anime,'<noscript','</noscript>'),'<script','</script>','window.location.href');          
+            $resto = str_replace(' ','',$final);           
+            $resto = self::getTags($resto,"window.location.href",'";');
+            $resto = str_replace('window.location.href="','',$resto);
+            $resto = str_replace(';','',$resto);
+            $resto = str_replace('"','',$resto);
+
+            $resto =  explode('https',$resto);
+            $resto = 'https'.$resto[1];
+            $html_anime = file_get_contents( trim($resto)) ;
+            $video = self::getTags($html_anime,"<video",'</video>');
+            $video = self::getTags($video,'src="','" ');
+
+            $video = explode('src="',$video);
+            echo '<hr>';
+            foreach ($video as $url_video) {
+                $url_video =  str_replace('<br>','',$url_video);
+                $url_video =  str_replace('"','',$url_video);
+                if (!empty($url_video)) {
+                    echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO </a><br>';                   
+                }
+            }
+            echo '<hr>';
+
+        } 
 
     }
 }
