@@ -1,4 +1,5 @@
 <?php 
+
 class AnimeFlv 
 {
 
@@ -12,6 +13,7 @@ class AnimeFlv
             $i = strpos($text_full,$text_before);
             $string_final = substr($text_full,$i);
             $end = strpos($string_final,$text_after);
+           if ($end) {
             $link_clear = substr($text_full,$i,($end + strlen($text_after))); //substr ini and cuanto recorrerá apartir de ahí
             
             if (strpos($link_clear,$menosSiTiene)) {
@@ -19,6 +21,7 @@ class AnimeFlv
             }
             
             $text_full =  str_replace($link_clear,"",$text_full); 
+        } 
         } 
     
         if (empty($text_full)) {
@@ -28,7 +31,7 @@ class AnimeFlv
     }
 
 
-    public function getTags($text_full,$taginit,$tagend)
+    public function getTags($text_full,$taginit,$tagend,$tag_final="<br>")
     {
     
         $fin = true;
@@ -37,6 +40,7 @@ class AnimeFlv
                 $inicio = strpos($text_full,$taginit);
                 $text_trozo = substr($text_full,$inicio);
                 $fin = strpos($text_trozo,$tagend);
+                if ($fin) {
                 $resto = substr($text_full,$inicio,($fin + strlen($tagend)));
                 if (strpos($resto,'<img')) {
                     // try {
@@ -44,7 +48,6 @@ class AnimeFlv
                     //     $link_clear_img = substr($link_clear,$ii);
                     //     $endi = strpos($link_clear_img,">");
                     //     $link_clear_img = substr($link_clear,$ii,$endi + 1);
-                    //    echo '<pre>'; var_dump( $link_clear_img ); echo '</pre>'; die;/***HERE***/ 
                     //     $link_clear = $link_clear_img ;             
                     //  } catch (Exception $e) {         
                     //  } 
@@ -61,8 +64,21 @@ class AnimeFlv
                     } 
                 }
     
-                $restoGroup .= $resto .'<br>' ;
+                    // Negar si el tag tiene
+                    $no_excluido = true;
+                    foreach (array('contraseña','Inicio','Registrate','INICIAR SESION','Directorio Anime','Opción',
+                                    'AnimeFLV','Cuevana','Términos y Condiciones','Politica y Privacidad','Política de Privacidad',
+                                    'REPORTAR</span>','Estrellas','BtnNw','uploads/avatars/','animeflv/img/chat.png') as  $value) {
+                        if (strpos($resto,$value)) {
+                            $no_excluido =  false;
+                            break;
+                        }
+                    }
+    
+                    if ($no_excluido)  $restoGroup .= $resto .$tag_final ;
+                                                     
                 $text_full  = substr($text_full,$inicio+($fin + strlen($tagend)));
+            }
             }
     
             if (!empty($restoGroup)) {
@@ -73,6 +89,7 @@ class AnimeFlv
                 $restoGroup = str_replace('/anime/','interna.php?url=/anime/',$restoGroup);
                 $restoGroup = str_replace('/uploads/','https://animeflv.net/uploads/',$restoGroup);
                 $restoGroup = str_replace('/browse?','search.php?',$restoGroup);
+                $restoGroup = str_replace('<article class="Anime alt B">','',$restoGroup);
                 
                 return $restoGroup;
             }else {
@@ -108,15 +125,27 @@ class AnimeFlv
             $resto = str_replace("$(window).width()",'"90%"', $resto);
             $resto = str_replace("$(window).height()",'"90%"', $resto);
           ?> 
+
             <div id="message"></div>
             <div id="videoLoading"></div>
             <div id="player"></div>
             <div id="my-player"></div>
-            <input type="button" id="start" value="START">
+            <!-- <input type="button" id="start" value="START"> -->
+            <button type="button" id="start" class=" btn-success" style="
+                size:  20%;
+                width: 19%;
+                height: 50px;
+                text-align: center;
+            ">START</button>
             <div id=""></div>
-            
+        </div>
             <?php
+            $resto = str_replace('}).fail(function()','XXXXXXXXXX } }).fail(function()', $resto );
+
+           $resto =  self::removeScript($resto,"var player","XXXXXXXXXX");
+            
            echo $resto;
+           
         } 
 
 
