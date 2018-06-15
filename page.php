@@ -10,9 +10,8 @@ $html_anime_iframe = $html_anime;
 
 $html_anime_iframe =  $AnimeFlv->getTags($html_anime_iframe,'<iframe','</iframe>');
 
-$AnimeFlv->getUrlMediafire($html_anime_iframe);
-echo '<br> VIDIO VIEW :';
-$AnimeFlv->getUrlServerRV($html_anime_iframe);
+// $AnimeFlv->debug =1;
+$AnimeFlv->startIframe($html_anime_iframe);
 
 echo '<br> ----------------';
 
