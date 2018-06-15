@@ -5,6 +5,7 @@ class AnimeFlv
 
     public $debug = 0;
     public $text_full ;
+    public $echo_resto_iframe = array();
     
     public function removeScript($text_full,$text_before="<script",$text_after="</script>",$menosSiTiene = "Palabra A coincidir que irá al final")
     {        
@@ -121,8 +122,16 @@ class AnimeFlv
                  self::getUrlMediafire($url);              
             }else if(strpos($url,'server=rv')) {//RV
                 self::getUrlServerRV($url);
-            }
+            }else if(strpos($url,'server=mega')) {//Mega
+                self::getUrlServerMega($url);
+            }else if(strpos($url,'server=streamango')) {//Mega
+                // Muy complicado xd
+            }elseif (!empty($value)) {
+                $this->echo_resto_iframe[] = $url;
+            }           
         }
+
+        self::echoIframe();
     }
 
     public function getUrlMediafire($url)
@@ -164,6 +173,7 @@ class AnimeFlv
             $resto = self::getTags($resto,'window.location.href="','";','<br>','only');
             $resto =  explode('<br>',$resto);
             $resto = $resto[0] .'para_que_muestre_tres_versiones';
+
             $html_anime = file_get_contents( trim($resto)) ;
             $video = self::getTags($html_anime,"<video",'</video>');
             $video = self::getTags($video,'src="','"','<br>','only');
@@ -179,4 +189,31 @@ class AnimeFlv
         } 
 
     }
+
+    public function getUrlServerMega($url)
+    {
+        if ( isset($url)) {
+            $html_anime = file_get_contents($url) ;
+            $final = self::removeScript($html_anime,'<script','</script>','window.location.href');          
+            $resto = str_replace(' ','',$final);  
+            $resto = self::getTags($resto,'window.location.href="','";','<br>','only');
+            $resto =  explode('<br>',$resto);
+            $resto = $resto[0] ;
+
+             
+            if (strpos($resto,'mega')) {
+                echo '<a href="'.$resto.'" target="__black">VIEW VIDEO  MEGA </a><br>';                   
+            }
+            echo '<hr>';
+
+        } 
+    }
+
+    public function echoIframe()
+    {
+      foreach ($this->echo_resto_iframe as  $value) {
+           echo '<iframe width="560" height="315" src="'.$value.'" frameborder="0" allowfullscreen></iframe> <hr>'."\n";
+      }
+    }
+    
 }

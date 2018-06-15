@@ -37,19 +37,22 @@ a{
 <form action="search.php" method="get">
 <input name="q" type="text" id="search-anime"  class="form-control" autocomplete="off" placeholder="Buscar..." value="<?php echo $_REQUEST['q'] ?>" style="
     width: 50%;
-    max-width: 500px;
+    max-width: 600px;
     margin:  10px;
+    height: 80px;
+
 ">
 
  <button type="button"  class=" btn-success fa-search" style="
                 margin: 5px;
-                height: 40px;
-                width:100px;
+                height: 80px;
+                width:200px;
             ">Buscar</button>
 
 </form>
 <div class="DpdwCnt TtCn">
 <ul class="ListResult"></ul>
+<span>-------Fin Search-------</span>
 </div>
 <br>
 
