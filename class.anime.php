@@ -54,6 +54,12 @@ class AnimeFlv
                 if ($fin) {
                         $resto = substr($text_full,$inicio + $mas_inixio,($fin + $mas_finx));
                         if (strpos($resto,'<img')) {
+                            // $resto = str_replace('style="display:none;visibility:hidden;"','',$resto);
+                            // $resto = str_replace('data-cfsrc','src',$resto);
+                            // $img_only = self::getTags($resto,'<img',' >','','entero');
+                            // $img_only = self::getTags($img_only,'src="','"','','only');
+                            // $img_only = str_replace("'","",$img_only);
+                            // $resto = ' <iframe src="'.$img_only.'" frameborder="0"></iframe>';
                             // try {
                             //     $ii = strpos($link_clear,'<img');
                             //     $link_clear_img = substr($link_clear,$ii);
@@ -98,7 +104,6 @@ class AnimeFlv
                 $restoGroup = str_replace('/ver/','page.php?url=/ver/',$restoGroup);
                 $restoGroup = str_replace('/browse/','search.php?',$restoGroup);
                 $restoGroup = str_replace('/anime/','interna.php?url=/anime/',$restoGroup);
-                $restoGroup = str_replace('/uploads/','https://animeflv.net/uploads/',$restoGroup);
                 $restoGroup = str_replace('/browse?','search.php?',$restoGroup);
                 $restoGroup = str_replace('<article class="Anime alt B">','',$restoGroup);
                 
