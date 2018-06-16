@@ -10,19 +10,17 @@ class AnimeFlv
     public function removeScript($text_full,$text_before="<script",$text_after="</script>",$menosSiTiene = "Palabra A coincidir que irá al final")
     {        
         $text_full_bu = $text_full;
-        $end= true;
+        $i= true;
         $scrip_extra_valid = "";
-        while ($end ) {
+        while ($i ) {
             $i = strpos($text_full,$text_before);
             $string_final = substr($text_full,$i);
             $end = strpos($string_final,$text_after);
-           if ($end) {
+           if ($i) {
             $link_clear = substr($text_full,$i,($end + strlen($text_after))); //substr ini and cuanto recorrerá apartir de ahí
-            
             if (strpos($link_clear,$menosSiTiene)) {
                 $scrip_extra_valid = $link_clear;
             }
-            
             $text_full =  str_replace($link_clear,"",$text_full); 
         } 
         } 
@@ -37,7 +35,7 @@ class AnimeFlv
     public function getTags($text_full,$taginit,$tagend,$tag_final="<br>",$mode='entero')
     {
     
-        $fin = true;
+        $inicio = true;
         $restoGroup = "";
 
         if ($mode == 'entero') {
@@ -47,30 +45,14 @@ class AnimeFlv
             $mas_inixio = strlen($taginit);
             $mas_finx = 0;
         }
-            while ($fin ) {
+            while ($inicio ) {
                 $inicio = strpos($text_full,$taginit);                
                 $text_trozo = substr($text_full,$inicio + $mas_inixio );                            
                 $fin = strpos($text_trozo,$tagend);
-                if ($fin) {
+                if ($inicio) {
                         $resto = substr($text_full,$inicio + $mas_inixio,($fin + $mas_finx));
                         if (strpos($resto,'<img')) {
-
-                            $resto = self::removeScript($resto ,'<figure>','</figura>');
-
-                            // $resto = str_replace('style="display:none;visibility:hidden;"','',$resto);
-                            // $resto = str_replace('data-cfsrc','src',$resto);
-                            // $img_only = self::getTags($resto,'<img',' >','','entero');
-                            // $img_only = self::getTags($img_only,'src="','"','','only');
-                            // $img_only = str_replace("'","",$img_only);
-                            // $resto = ' <iframe src="'.$img_only.'" frameborder="0"></iframe>';
-                            // try {
-                            //     $ii = strpos($link_clear,'<img');
-                            //     $link_clear_img = substr($link_clear,$ii);
-                            //     $endi = strpos($link_clear_img,">");
-                            //     $link_clear_img = substr($link_clear,$ii,$endi + 1);
-                            //     $link_clear = $link_clear_img ;             
-                            //  } catch (Exception $e) {         
-                            //  } 
+                            $resto = self::removeScript($resto ,'<figure>','</figure>');
                         }
             
                         if (strpos($resto,'http://ouo.io/s/y0d65LCP?s=')) {
@@ -132,7 +114,7 @@ class AnimeFlv
                 self::getUrlServerRV($url);
             }else if(strpos($url,'server=mega')) {//Mega
                 self::getUrlServerMega($url);
-            }else if(strpos($url,'server=streamango')) {//Mega
+            }else if(strpos($url,'server=streamango')) {//Manho - Se mantiene la publicidad :/
                 // Muy complicado xd
             }elseif (!empty($value)) {
                 $this->echo_resto_iframe[] = $url;
@@ -150,8 +132,8 @@ class AnimeFlv
             $final = self::removeScript($html_anime,'<script','</script>','https://www.mediafire.com/');        
           
             $resto = self::getTags($final,"<script",'</script>');
-            $resto = str_replace("$(window).width()",'"90%"', $resto);
-            $resto = str_replace("$(window).height()",'"90%"', $resto);
+            $resto = str_replace("$(window).width()",'"95%"', $resto);
+            $resto = str_replace("$(window).height()",'"95%"', $resto);
           ?> 
 
         <div>
@@ -177,7 +159,7 @@ class AnimeFlv
             $resto = str_replace(' ','',$final);  
             $resto = self::getTags($resto,'window.location.href="','";','<br>','only');
             $resto =  explode('<br>',$resto);
-            $resto = $resto[0] .'para_que_muestre_tres_versiones';
+            $resto = $resto[0] .'para_que_muestre_tres_resoluciones';
 
             $html_anime = file_get_contents( trim($resto)) ;
             $video = self::getTags($html_anime,"<video",'</video>');
@@ -205,7 +187,6 @@ class AnimeFlv
             $resto =  explode('<br>',$resto);
             $resto = $resto[0] ;
 
-             
             if (strpos($resto,'mega')) {
                 echo '<a href="'.$resto.'" target="__black">VIEW VIDEO  MEGA </a><br>';                   
             }

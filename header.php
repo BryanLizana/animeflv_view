@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
 </head>
@@ -30,13 +29,15 @@ a{
     background-color: white;
     color: black;
     border: 2px solid #4CAF50;
-    padding: 10px 20px;
+    padding: 15px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    margin-left: 30px;
     margin: 5px;
+    font-size: 27px;
+    min-height: 100px;
+    width:100%;
+    max-width:1500px;
 }
 
 .btn-success{
@@ -54,17 +55,15 @@ a{
  
 }
 
-a{
-    min-height: 100px;
 
-    width:100%;
-    max-width:1500px;
-}
 </style>
 
-<a href="https://animeflv.net<?php echo $_GET['url'] ?>" target="__black">VIEW PAGE ANIMEFLV</a>
+<a href="https://animeflv.net<?php echo $_GET['url'] ?>" style="
+    display: contents; */
+" target="__black">VIEW PAGE ANIMEFLV</a>
 <br>
-<a href="/planet.php">HOME PLANET</a> <br>
+<br>
+<!-- <a href="planet.php">HOME PLANET</a> <br> -->
 <a href="planet.php?url=/users/BryanLizana/anime/watching">View List BryanLizana</a>
 <br>
 <a href="index.php" >HOME</a>
@@ -72,9 +71,7 @@ a{
 <br><br>
 <form action="search.php" method="get">
 <input name="q" type="text" id="search-anime"  class="form-control input-text" autocomplete="off" placeholder="Buscar..." value="<?php echo $_REQUEST['q'] ?>" >
-
- <button type="button"  class=" btn-success fa-search" >Buscar</button>
-
+<input type="submit" class=" btn-success fa-search" value="Buscar">
 </form>
 <div class="DpdwCnt TtCn">
 <ul class="ListResult"></ul>

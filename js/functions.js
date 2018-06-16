@@ -21,7 +21,7 @@ $(document).ready(function() {
     function searchy(value) {
         if (value.length < 2)
             return;
-        $.post('https://animeflv.net/api/animes/search', {
+        $.post('https://www.animeflv.net/api/animes/search', {
             value: value
         }, function(data) {
             $('.Search').addClass('On');
