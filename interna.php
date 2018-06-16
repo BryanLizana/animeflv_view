@@ -8,3 +8,6 @@ $final =  $AnimeFlv->getTags($final,'<a','</a>');
 echo $final;
 
 ?>
+<?php
+require_once('./footer.php');
+?>

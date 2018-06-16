@@ -24,3 +24,6 @@ $AnimeFlv->startIframe($html_anime_iframe);
 ?>
 
 
+<?php
+require_once('./footer.php');
+?>

@@ -54,6 +54,9 @@ class AnimeFlv
                 if ($fin) {
                         $resto = substr($text_full,$inicio + $mas_inixio,($fin + $mas_finx));
                         if (strpos($resto,'<img')) {
+
+                            $resto = self::removeScript($resto ,'<figure>','</figura>');
+
                             // $resto = str_replace('style="display:none;visibility:hidden;"','',$resto);
                             // $resto = str_replace('data-cfsrc','src',$resto);
                             // $img_only = self::getTags($resto,'<img',' >','','entero');
@@ -75,7 +78,7 @@ class AnimeFlv
                                 $a = new SimpleXMLElement($resto);
                                 $url_clean = str_replace('http://ouo.io/s/y0d65LCP?s=' , '',$a['href']);
                                 $url_clean = urldecode($url_clean);                
-                                $resto = '<a href="'.$url_clean .'">'.$url_clean .'</a>'.'======<a href="'.$url_clean .'" target="__black">Click To link</a>' ;                
+                                $resto = '<a href="'.$url_clean .'"  target="__black">'.$url_clean .'</a>' ;                
                             } catch (Exception $e) {
                                 $resto = json_encode( $e );
                             } 
@@ -85,7 +88,7 @@ class AnimeFlv
                             $no_excluido = true;
                             foreach (array('contraseña','Inicio','Registrate','INICIAR SESION','Directorio Anime','Opción',
                                             'AnimeFLV','Cuevana','Términos y Condiciones','Politica y Privacidad','Política de Privacidad',
-                                            'REPORTAR</span>','Estrellas','BtnNw','uploads/avatars/','animeflv/img/chat.png') as  $value) {
+                                            'REPORTAR</span>','Estrellas','BtnNw','uploads/avatars/','animeflv/img/chat.png','FACEBOOK','TWITTER','Mas') as  $value) {
                                 if (strpos($resto,$value)) {
                                     $no_excluido =  false;
                                     break;
@@ -157,10 +160,7 @@ class AnimeFlv
             <div id="player"></div>
             <div id="my-player"></div>
             <!-- <input type="button" id="start" value="START"> -->
-            <button type="button" id="start" class=" btn-success" style="size:  20%;
-                width: 19%;
-                height: 50px;
-                text-align: center;">START</button>
+            <button type="button" id="start" class=" btn-success" >START</button>
         </div>
             <?php
             $resto = str_replace('}).fail(function()','XXXXXXXXXX } }).fail(function()', $resto );

@@ -29,7 +29,7 @@ $(document).ready(function() {
             var data_len = data.length;
             if (data_len) {
                 for (var i = 0; i < data_len; i++) {
-                    console.log(data[i]);
+                    // console.log(data[i]);
                     if (i >= 5) {
                         $(".ListResult").append('<li class="MasResultados"><a href="/search?q=' + encodeURI(value) + '">Más Resultados</a></li>');
                         return false;

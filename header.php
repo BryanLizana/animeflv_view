@@ -1,4 +1,18 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body style="
+    margin:  16px;
+">
+
 <!-- https://animeflv.net/browse?q=naruto -->
 <!-- <form action="search.php" method="get" >
 <input type="text" name="q" id="" placeholder="buscar" value="<?php echo $_REQUEST['q'] ?>">
@@ -10,11 +24,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <style>
-ul {
-  columns: 2;
-  -webkit-columns: 2;
-  -moz-columns: 2;
-}
+/* General */
+
 a{
     background-color: white;
     color: black;
@@ -27,6 +38,28 @@ a{
     margin-left: 30px;
     margin: 5px;
 }
+
+.btn-success{
+    margin: 5px;
+    height: 80px;
+    width:100%;
+    max-width:1500px;
+
+}
+.input-text{
+    margin: 5px;
+    height: 80px;
+    width:100%;
+    max-width:1500px;
+ 
+}
+
+a{
+    min-height: 100px;
+
+    width:100%;
+    max-width:1500px;
+}
 </style>
 
 <a href="https://animeflv.net<?php echo $_GET['url'] ?>" target="__black">VIEW PAGE ANIMEFLV</a>
@@ -35,19 +68,9 @@ a{
 
 <br>
 <form action="search.php" method="get">
-<input name="q" type="text" id="search-anime"  class="form-control" autocomplete="off" placeholder="Buscar..." value="<?php echo $_REQUEST['q'] ?>" style="
-    width: 50%;
-    max-width: 600px;
-    margin:  10px;
-    height: 80px;
+<input name="q" type="text" id="search-anime"  class="form-control input-text" autocomplete="off" placeholder="Buscar..." value="<?php echo $_REQUEST['q'] ?>" >
 
-">
-
- <button type="button"  class=" btn-success fa-search" style="
-                margin: 5px;
-                height: 80px;
-                width:200px;
-            ">Buscar</button>
+ <button type="button"  class=" btn-success fa-search" >Buscar</button>
 
 </form>
 <div class="DpdwCnt TtCn">

@@ -26,3 +26,6 @@ $final = str_replace('Rank','<a href="'.$url_search.'" target="__black">SEARCH A
 echo  $final; die;/***DIE***/ 
 
 ?>
+<?php
+require_once('./footer.php');
+?>
