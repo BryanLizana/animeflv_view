@@ -12,8 +12,8 @@ $final = str_replace("='/","='https://www.anime-planet.com/",$final);
 $final = str_replace('https://www.anime-planet.com/anime/','?url=/anime/',$final);
 $final = str_replace('https://www.anime-planet.com/manga/','?url=/manga/',$final);
 $final = str_replace('https://www.anime-planet.com/users/','?url=/users/',$final);
-$final = str_replace('log in','<a href="/planet.php">HOME PLANET</a> <br>
-<a href="/planet.php?url=/users/BryanLizana/anime/watching">View List BryanLizana</a>
+$final = str_replace('log in','<a href="planet.php">HOME PLANET</a> <br>
+<a href="planet.php?url=/users/BryanLizana/anime/watching">View List BryanLizana</a>
 ',$final);
 
 $url_search= "#";

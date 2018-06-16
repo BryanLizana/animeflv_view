@@ -64,9 +64,12 @@ a{
 
 <a href="https://animeflv.net<?php echo $_GET['url'] ?>" target="__black">VIEW PAGE ANIMEFLV</a>
 <br>
+<a href="/planet.php">HOME PLANET</a> <br>
+<a href="planet.php?url=/users/BryanLizana/anime/watching">View List BryanLizana</a>
+<br>
 <a href="index.php" >HOME</a>
 
-<br>
+<br><br>
 <form action="search.php" method="get">
 <input name="q" type="text" id="search-anime"  class="form-control input-text" autocomplete="off" placeholder="Buscar..." value="<?php echo $_REQUEST['q'] ?>" >
 
