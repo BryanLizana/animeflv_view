@@ -6,6 +6,7 @@ class AnimeFlv
     public $debug = 0;
     public $text_full ;
     public $echo_resto_iframe = array();
+    public $chage_url = 1;
     
     public function removeScript($text_full,$text_before="<script",$text_after="</script>",$menosSiTiene = "Palabra A coincidir que irá al final")
     {        
@@ -49,13 +50,14 @@ class AnimeFlv
                 $inicio = strpos($text_full,$taginit);                
                 $text_trozo = substr($text_full,$inicio + $mas_inixio );                            
                 $fin = strpos($text_trozo,$tagend);
+              
                 if ($inicio) {
                         $resto = substr($text_full,$inicio + $mas_inixio,($fin + $mas_finx));
                         if (strpos($resto,'<img')) {
                             $resto = self::removeScript($resto ,'<figure>','</figure>');
                         }
             
-                        if (strpos($resto,'http://ouo.io/s/y0d65LCP?s=')) {
+                        if (strpos($resto,'http://ouo.io/s/y0d65LCP?s=') && $taginit == "<a") {
                             try {
                                 $a = new SimpleXMLElement($resto);
                                 $url_clean = str_replace('http://ouo.io/s/y0d65LCP?s=' , '',$a['href']);
@@ -70,7 +72,7 @@ class AnimeFlv
                             $no_excluido = true;
                             foreach (array('contraseña','Inicio','Registrate','INICIAR SESION','Directorio Anime','Opción',
                                             'AnimeFLV','Cuevana','Términos y Condiciones','Politica y Privacidad','Política de Privacidad',
-                                            'REPORTAR</span>','Estrellas','BtnNw','uploads/avatars/','animeflv/img/chat.png','FACEBOOK','TWITTER','Mas') as  $value) {
+                                            'REPORTAR</span>','Estrellas','BtnNw','uploads/avatars/','animeflv/img/chat.png','FACEBOOK','TWITTER','Mas','aria-label="Close','class="fa-youtube"') as  $value) {
                                 if (strpos($resto,$value)) {
                                     $no_excluido =  false;
                                     break;
@@ -79,18 +81,22 @@ class AnimeFlv
             
                             if ($no_excluido)  $restoGroup .= $resto .$tag_final ;
                                                             
-                        $text_full  = substr($text_full,$inicio+($fin + $mas_finx));
+                        $text_full  = substr($text_full,$inicio+($fin + $mas_finx));                                                       
                 }
             }
     
             if (!empty($restoGroup)) {
     
-                // Recrear url's
-                $restoGroup = str_replace('/ver/','page.php?url=/ver/',$restoGroup);
-                $restoGroup = str_replace('/browse/','search.php?',$restoGroup);
-                $restoGroup = str_replace('/anime/','interna.php?url=/anime/',$restoGroup);
-                $restoGroup = str_replace('/browse?','search.php?',$restoGroup);
-                $restoGroup = str_replace('<article class="Anime alt B">','',$restoGroup);
+                if ($this->chage_url == 1 ) {
+                     // Recrear url's
+                    $restoGroup = str_replace('/ver/','page.php?url=/ver/',$restoGroup);
+                    $restoGroup = str_replace('/browse/','search.php?',$restoGroup);
+                    $restoGroup = str_replace('/anime/','interna.php?url=/anime/',$restoGroup);
+                    $restoGroup = str_replace('/browse?','search.php?',$restoGroup);
+                    $restoGroup = str_replace('<article class="Anime alt B">','',$restoGroup);
+                    $this->chage_url = 0;
+                }
+               
                 
                 return $restoGroup;
             }else {
@@ -121,7 +127,7 @@ class AnimeFlv
             }           
         }
 
-        self::echoIframe();
+     
     }
 
     public function getUrlMediafire($url)
@@ -142,7 +148,7 @@ class AnimeFlv
             <div id="player"></div>
             <div id="my-player"></div>
             <!-- <input type="button" id="start" value="START"> -->
-            <button type="button" id="start" class=" btn-success" >START</button>
+            <button type="button" id="start" class=" btn-success" >START VIDEO MediaFire</button>
         </div>
             <?php
             $resto = str_replace('}).fail(function()','XXXXXXXXXX } }).fail(function()', $resto );
@@ -168,7 +174,7 @@ class AnimeFlv
             echo '<hr>';
             foreach ($video as $url_video) {
                 if (strpos($url_video,'ttp')) {
-                    echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO  </a><br>';                   
+                    echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO RV </a><br>';                   
                 }
             }
             echo '<hr>';
@@ -201,5 +207,36 @@ class AnimeFlv
            echo '<iframe width="560" height="315" src="'.$value.'" frameborder="0" allowfullscreen></iframe> <hr>'."\n";
       }
     }
+
+
+    public function viewViews()
+    {
+        $views = file_get_contents('./json/view.json');
+        $views = json_decode($views);
+        foreach ($views as $v) {
+           echo $v;
+        }
+    }
+    
+    public function markerView($urlView)
+    {
+
+        $views = file_get_contents('./json/view.json');
+        $views = json_decode($views,true);
+
+        try {
+            $views[count($views)] = $urlView;
+            $myfile = fopen("./json/view.json");
+            $txt = json_encode( $views );
+            fwrite($myfile, $txt);
+            fclose($myfile);
+        } catch (Exception $e) {
+         $e->getMessage() ;
+         echo '<pre>'; var_dump( $e->getMessage() ); echo '</pre>'; die;/***HERE***/ 
+        } 
+       
+
+    }
+    
     
 }

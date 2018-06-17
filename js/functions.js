@@ -13,7 +13,7 @@ $(document).ready(function() {
         var searchTerm = $(this).val();
         if (searchTerm.length > 1) {
             $('.Search').addClass('On');
-            $(".ListResult").html('<li class="Loading"><img src="/assets/images/preloader_white.gif" alt="Loading" /> Buscando...</li>');
+            $(".ListResult").html('<li class="Loading"><img  alt="Loading" /> Buscando...</li>');
         } else
             $('.Search').removeClass('On');
     });
@@ -21,7 +21,7 @@ $(document).ready(function() {
     function searchy(value) {
         if (value.length < 2)
             return;
-        $.post('https://www.animeflv.net/api/animes/search', {
+        $.post('https://animeflv.net/api/animes/search', {
             value: value
         }, function(data) {
             $('.Search').addClass('On');
