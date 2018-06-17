@@ -17,8 +17,8 @@ if (!empty($html_anime)) {
 // $AnimeFlv->debug =1;
 
 $final = $AnimeFlv->removeScript($html_anime);
-// $descargas_url = $AnimeFlv->getTags($final,'<table','</table>');
-// $descargas_url =  $AnimeFlv->getTags($descargas_url,'<a','</a>');
+$descargas_url = $AnimeFlv->getTags($final,'<table','</table>');
+$descargas_url =  $AnimeFlv->getTags($descargas_url,'<a','</a>');
 
 
 $final = $AnimeFlv->removeScript($final,'<table','</table>');
@@ -34,54 +34,54 @@ $AnimeFlv->startIframe($html_anime_iframe);
 
 ?>
 <!-- Temporalmente cerrado -->
-<!-- <button onclick="initShowDivOne(event)" class=" btn-success">Click Me to View Descargas</button>
- <div id="ShowOne">  -->
+<button onclick="initShowDivOne(event)" class=" btn-success">Click Me to View Descargas</button>
+ <div id="ShowOne"> 
 <?php
 //  Descargas -->
-// echo $descargas_url;
+echo $descargas_url;
 ?>  
-<!-- </div>  -->
+</div> 
  <?php
 
 
 // <!-- Iframes -->
 ?>
-<!-- <button onclick="initShowDivTwo(event)" class=" btn-success">Click Me to View Iframes</button>
- <div id="ShowTwo">  -->
+<button onclick="initShowDivTwo(event)" class=" btn-success">Click Me to View Iframes</button>
+ <div id="ShowTwo"> 
 <?php
-// $AnimeFlv->echoIframe();
+$AnimeFlv->echoIframe();
 ?> 
- <!-- </div>    -->
+ </div>   
 
 
  <script>
 
-// initShowDivOne(null);
-// initShowDivTwo(null);
+initShowDivOne(null);
+initShowDivTwo(null);
 
-//      function initShowDivOne(event) {
-//          if(event != null){
-//             event.preventDefault()
-//          }
-//             var x = document.getElementById("ShowOne");
-//             if (x.style.display === "none") {
-//                 x.style.display = "block";
-//             } else {
-//                 x.style.display = "none";
-//             }
-//         }
+     function initShowDivOne(event) {
+         if(event != null){
+            event.preventDefault()
+         }
+            var x = document.getElementById("ShowOne");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
 
-//      function initShowDivTwo(event) {
-//          if(event != null){
-//             event.preventDefault()
-//          }
-//             var x = document.getElementById("ShowTwo");
-//             if (x.style.display === "none") {
-//                 x.style.display = "block";
-//             } else {
-//                 x.style.display = "none";
-//             }
-//         }
+     function initShowDivTwo(event) {
+         if(event != null){
+            event.preventDefault()
+         }
+            var x = document.getElementById("ShowTwo");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
 
    </script>
 
