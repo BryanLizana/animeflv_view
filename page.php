@@ -12,7 +12,7 @@ $html_anime_iframe =  $AnimeFlv->getTags($html_anime_iframe,'<iframe','</iframe>
 
 
 if (!empty($html_anime)) {
-    $AnimeFlv->markerView($_REQUEST['url']);  
+    // $AnimeFlv->markerView($_REQUEST['url']);  
 }
 // $AnimeFlv->debug =1;
 
