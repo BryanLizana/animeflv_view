@@ -30,8 +30,8 @@ if (strpos($_REQUEST['url'],'anime/')) {
 $url_search = str_replace('/anime/','',$_REQUEST['url']);
 $url_search = "search.php?q=". str_replace('-','%20',$url_search); 
 }
-
-$final = str_replace("<a class='button screenshots'","XXXXX<a class='button screenshots'",$final);
+// title="  "
+$final = str_replace('<div class="mainEntry">','XXXXX<div class="mainEntry">',$final);
 $final = $AnimeFlv->removeScript($final,"<a class='button screenshots'",'</a>');
 
 $final = str_replace('XXXXX','<a href="'.$url_search.'" target="__black" class="button">SEARCH ANIME IN FLV</a> <br>',$final);
