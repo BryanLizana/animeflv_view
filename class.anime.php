@@ -236,10 +236,14 @@ class AnimeFlv
 
         try {
             $viewsAll = array_unique($viewsAll);
-            $myfile = fopen(__DIR__."/json/view.json", 'w+') or die('nop');
-            $txt = json_encode( $viewsAll );
-            fwrite($myfile, $txt);
-            fclose($myfile);
+
+            if (count($viewsAll) < 10) {
+                $myfile = fopen(__DIR__."/json/view.json", 'w+') or die('nop');
+                $txt = json_encode( $viewsAll );
+                fwrite($myfile, $txt);
+                fclose($myfile);
+            }
+            
         } catch (Exception $e) {
          $e->getMessage() ;
          echo '<pre>'; var_dump( $e->getMessage() ); echo '</pre>'; die;/***HERE***/ 
