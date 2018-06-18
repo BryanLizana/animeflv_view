@@ -75,5 +75,7 @@ a{
 </div>
 <br>
 
+<h2><?php echo str_replace('-',' ',$_REQUEST['url']) ?></h2>
+
 <!-- Here start Process -->
 <br>
