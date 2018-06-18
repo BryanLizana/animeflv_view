@@ -213,21 +213,31 @@ class AnimeFlv
     {
         $views = file_get_contents('./json/view.json');
         $views = json_decode($views);
-        foreach ($views as $v) {
-           echo $v;
+        foreach ($views as $v) {     
+           echo '<a href="page.php?url='.$v.'">'.$v.'</a><br>';
         }
     }
     
     public function markerView($urlView)
     {
 
-        $views = file_get_contents('./json/view.json');
+        $urlView = array($urlView );
+
+        $viewsAll = array('Links');
+
+        $views = file_get_contents(__DIR__.'/json/view.json');
         $views = json_decode($views,true);
+        if (!is_array($views)) {
+            $viewsAll = array_merge($viewsAll,$urlView);
+        }else{
+            $viewsAll = array_merge($viewsAll,$views,$urlView);
+
+        }
 
         try {
-            $views[count($views)] = $urlView;
-            $myfile = fopen("./json/view.json");
-            $txt = json_encode( $views );
+            $viewsAll = array_unique($viewsAll);
+            $myfile = fopen(__DIR__."/json/view.json", 'w+') or die('nop');
+            $txt = json_encode( $viewsAll );
             fwrite($myfile, $txt);
             fclose($myfile);
         } catch (Exception $e) {
