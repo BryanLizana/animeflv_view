@@ -221,17 +221,29 @@ class AnimeFlv
     public function markerView($urlView)
     {
 
-        $urlView = array($urlView );
 
-        $viewsAll = array('Links');
+        $urlView_array = explode("/",$urlView);
+        $view_anime_name = $urlView_array[count($urlView_array) -1 ];
+
+        //get cap
+        $cap = explode("-",$view_anime_name);
+        $cap = $cap[count($cap) - 1];
+
+        if (is_numeric($cap)) {
+            $view_anime_name =  str_replace($cap,'',$view_anime_name);
+            $view_anime_name =  ucwords(str_replace('-',' ',$view_anime_name));
+            $view_anime_name =  trim($view_anime_name);
+        }
+        
+        $urlView = array('name' => $view_anime_name,'cap' => $urlView ,'date'=> date('Y-m-d') );
 
         $views = file_get_contents(__DIR__.'/json/view.json');
         $views = json_decode($views,true);
         if (!is_array($views)) {
-            $viewsAll = array_merge($viewsAll,$urlView);
-        }else{
-            $viewsAll = array_merge($viewsAll,$views,$urlView);
-
+            $viewsAll = $urlView;
+        }else{            
+            
+            $viewsAll = array_merge($views,$urlView);
         }
 
         try {
