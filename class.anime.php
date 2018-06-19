@@ -213,14 +213,13 @@ class AnimeFlv
     {
         $views = file_get_contents('./json/view.json');
         $views = json_decode($views);
-        foreach ($views as $v) {     
-           echo '<a href="page.php?url='.$v.'">'.$v.'</a><br>';
+        foreach ($views as  $value) {   
+           echo '<a href="page.php?url='.$value->cap.'">'.$value->name.' - '.$value->number.' - '.$value->date.'</a><br>';
         }
     }
     
     public function markerView($urlView)
     {
-
 
         $urlView_array = explode("/",$urlView);
         $view_anime_name = $urlView_array[count($urlView_array) -1 ];
@@ -234,20 +233,31 @@ class AnimeFlv
             $view_anime_name =  ucwords(str_replace('-',' ',$view_anime_name));
             $view_anime_name =  trim($view_anime_name);
         }
-        
-        $urlView = array('name' => $view_anime_name,'cap' => $urlView ,'date'=> date('Y-m-d') );
+
+        $urlView = array('name' => $view_anime_name,'cap' => $urlView ,'date'=> date('Y-m-d'),'number'=>$cap );
 
         $views = file_get_contents(__DIR__.'/json/view.json');
         $views = json_decode($views,true);
         if (!is_array($views)) {
-            $viewsAll = $urlView;
-        }else{            
-            
-            $viewsAll = array_merge($views,$urlView);
+            $viewsAll[] = $urlView;
+        }else{     
+            $push = true;
+
+            for ($i=0; $i < count($views) ; $i++) { 
+                if ($views[$i]['name'] == $urlView['name'] ) { //update cap
+                    // TODO: Poner al final o principio, quitar y push array
+                    $views[$i] = $urlView ;
+                    $push = false;
+                }
+            }      
+            if ( $push == true) {
+                array_push($views,$urlView);
+            }
+            $viewsAll = $views; 
         }
 
         try {
-            $viewsAll = array_unique($viewsAll);
+            // $viewsAll = array_unique($viewsAll);
 
             if (count($viewsAll) < 10) {
                 $myfile = fopen(__DIR__."/json/view.json", 'w+') or die('nop');
