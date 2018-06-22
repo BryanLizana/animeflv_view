@@ -31,7 +31,6 @@ echo $final;
 
 // <!-- Videosdisponibles -->
 $AnimeFlv->startIframe($html_anime_iframe);
-
 ?>
 <!-- Temporalmente cerrado -->
 <button onclick="initShowDivOne(event)" class=" btn-success">Click Me to View Descargas</button>
@@ -53,6 +52,7 @@ $AnimeFlv->echoIframe();
 ?> 
  </div>   
 
+<a href="./desactive.anime.php?url=<?php echo $_REQUEST['url'] ?>" class=" btn-danger" >Desactive Anime List</a>
 
  <script>
 
