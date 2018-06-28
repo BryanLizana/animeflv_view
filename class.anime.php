@@ -135,8 +135,7 @@ class AnimeFlv
         // efire.php
         if ( isset($url)) {
             $html_anime = file_get_contents($url) ;
-            $final = self::removeScript($html_anime,'<script','</script>','https://www.mediafire.com/');        
-          
+            $final = self::removeScript($html_anime,'<script','</script>','www.mediafire.com');        
             $resto = self::getTags($final,"<script",'</script>');
             $resto = str_replace("$(window).width()",'"95%"', $resto);
             $resto = str_replace("$(window).height()",'"95%"', $resto);
@@ -161,12 +160,11 @@ class AnimeFlv
     {
         if ( isset($url)) {
             $html_anime = file_get_contents($url) ;
-            $final = self::removeScript(self::removeScript($html_anime,'<noscript','</noscript>'),'<script','</script>','window.location.href');          
-            $resto = str_replace(' ','',$final);  
-            $resto = self::getTags($resto,'window.location.href="','";','<br>','only');
-            $resto =  explode('<br>',$resto);
-            $resto = $resto[0] .'para_que_muestre_tres_resoluciones';
+            $html_anime = str_replace(' ','',$html_anime);
+            $final = self::getTags($html_anime,"https://www.rapidvideo.com",'";');
 
+            $resto =  explode('<br>',$final);
+            $resto = $resto[0] .'para_que_muestre_tres_resoluciones';
             $html_anime = file_get_contents( trim($resto)) ;
             $video = self::getTags($html_anime,"<video",'</video>');
             $video = self::getTags($video,'src="','"','<br>','only');
@@ -178,7 +176,6 @@ class AnimeFlv
                 }
             }
             echo '<hr>';
-
         } 
 
     }
@@ -187,14 +184,12 @@ class AnimeFlv
     {
         if ( isset($url)) {
             $html_anime = file_get_contents($url) ;
-            $final = self::removeScript($html_anime,'<script','</script>','window.location.href');          
-            $resto = str_replace(' ','',$final);  
-            $resto = self::getTags($resto,'window.location.href="','";','<br>','only');
-            $resto =  explode('<br>',$resto);
-            $resto = $resto[0] ;
-
-            if (strpos($resto,'mega')) {
-                echo '<a href="'.$resto.'" target="__black">VIEW VIDEO  MEGA </a><br>';                   
+            $final = self::getTags($html_anime,"https://mega.nz",'";');
+            $resto =  explode('<br>',$final);
+            foreach ($resto as $url) {
+               if (!empty($url) && strpos($url,'ttps://mega.nz')) {
+                  echo '<a href="'.$url.'" target="__black">VIEW VIDEO  MEGA </a><br>';                  
+               }
             }
             echo '<hr>';
 

@@ -10,13 +10,13 @@ $html_anime = file_get_contents('https://animeflv.net'.$_REQUEST['url']) ;
 $html_anime_iframe = $html_anime;
 $html_anime_iframe =  $AnimeFlv->getTags($html_anime_iframe,'<iframe','</iframe>');
 
-
 if (!empty($html_anime)) {
     $AnimeFlv->markerView($_REQUEST['url']);  
 }
 // $AnimeFlv->debug =1;
 
 $final = $AnimeFlv->removeScript($html_anime);
+
 $descargas_url = $AnimeFlv->getTags($final,'<table','</table>');
 $descargas_url =  $AnimeFlv->getTags($descargas_url,'<a','</a>');
 
