@@ -159,22 +159,32 @@ class AnimeFlv
     public function getUrlServerRV($url)
     {
         if ( isset($url)) {
-            $html_anime = file_get_contents($url) ;
-            $html_anime = str_replace(' ','',$html_anime);
-            $final = self::getTags($html_anime,"https://www.rapidvideo.com",'";');
+            $code_video = explode('value=',$url);
+            if (isset($code_video[1])) {
+                // https://www.rapidvideo.com/e/FT2X37EBZV&q=480p
 
-            $resto =  explode('<br>',$final);
-            $resto = $resto[0] .'para_que_muestre_tres_resoluciones';
-            $html_anime = file_get_contents( trim($resto)) ;
-            $video = self::getTags($html_anime,"<video",'</video>');
-            $video = self::getTags($video,'src="','"','<br>','only');
-            $video = explode('<br>',$video);
-            echo '<hr>';
-            foreach ($video as $url_video) {
-                if (strpos($url_video,'ttp')) {
-                    echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO RV </a><br>';                   
+
+                $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;
+                if (!empty($html_anime)) {
+                   
+                }
+                // $html_anime = str_replace(' ','',$html_anime);
+                // $final = self::getTags($html_anime,"https://www.rapidvideo.com",'";');
+
+                // $resto =  explode('<br>',$final);
+                // $resto = $resto[0] .'para_que_muestre_tres_resoluciones';
+                // $html_anime = file_get_contents( trim($resto)) ;
+                $video = self::getTags($html_anime,"<video",'</video>');
+                $video = self::getTags($video,'src="','"','<br>','only');
+                $video = explode('<br>',$video);
+                echo '<hr>';
+                foreach ($video as $url_video) {
+                    if (strpos($url_video,'ttp')) {
+                        echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO RV </a><br>';                   
+                    }
                 }
             }
+          
             echo '<hr>';
         } 
 
