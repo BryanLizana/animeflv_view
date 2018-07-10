@@ -182,7 +182,8 @@ class AnimeFlv
             // }
           
             // echo '<hr>';
-            // $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;
+            $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;
+            echo '<pre>'; var_dump( $html_anime ); echo '</pre>'; die;/***HERE***/ 
             // $video = self::getTags($html_anime,"<video",'</video>');
             // $video = self::getTags($video,'src="','"','<br>','only');
             // $video = explode('<br>',$video);
