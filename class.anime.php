@@ -116,7 +116,7 @@ class AnimeFlv
             $url = 'http' . $value;
             if (strpos($url,'efire.php')) {// Mediafire
                  self::getUrlMediafire($url);              
-            }else if(strpos($url,'server=rv')) {//RV
+            }else if(strpos($url,'server=rv-DELETE')) {//RV
                 self::getUrlServerRV($url);
             }else if(strpos($url,'server=mega')) {//Mega
                 self::getUrlServerMega($url);
@@ -180,10 +180,10 @@ class AnimeFlv
             //         }
             //     }
             // }
-          
+            
             // echo '<hr>';
-            $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;
-            echo '<pre>'; var_dump( $html_anime ); echo '</pre>'; die;/***HERE***/ 
+            // $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full");
+            // echo '<pre>'; var_dump( $html_anime ); echo '</pre>'; die;/***HERE***/ 
             // $video = self::getTags($html_anime,"<video",'</video>');
             // $video = self::getTags($video,'src="','"','<br>','only');
             // $video = explode('<br>',$video);
