@@ -122,12 +122,66 @@ class AnimeFlv
                 self::getUrlServerMega($url);
             }else if(strpos($url,'server=streamango')) {//Manho - Se mantiene la publicidad :/
                 // Muy complicado xd
+            }else if(strpos($url,'server=ok')) {//Manho - Se mantiene la publicidad :/
+                self::getUrlServerOk($url);
+            }else if(strpos($url,'s=izanagi')) {//Manho - Se mantiene la publicidad :/
+                self::getUrlServerIzanagi($url);
             }elseif (!empty($value)) {
                 $this->echo_resto_iframe[] = $url;
             }           
-        }
+        }     
+    }
 
-     
+    public function getUrlServerIzanagi($url)
+    {
+        $html_anime = file_get_contents($url) ;
+        $resto = self::getTags($html_anime,"check.php?","';",'<br>');
+        $resto = explode('<br>',$resto);
+        $resto = $resto[0];
+        $resto = str_replace("';","",$resto);
+        $url_video = file_get_contents('https://s3.animeflv.com/'.$resto);
+        $url_video =  json_decode( $url_video, true );
+      ?>
+       <video id="myVideo" width="100%" src="<?php echo  $url_video['file'] ?>" onclick="togglePause()" ></video>  
+       <input type="button" onclick="playVid()" value="Play" class="btn">
+       <input type="button" onclick="pauseVid()" value="Pause" class="btn">
+       <input type="button" onclick="goFullscreen()" value="Full Screen" class="btn">
+       <script>
+           var vid = document.getElementById("myVideo"); 
+            function playVid() { 
+                vid.play(); 
+            } 
+            function pauseVid() { 
+                vid.pause(); 
+            }
+            function goFullscreen() {
+                if (vid.mozRequestFullScreen) {
+                    vid.mozRequestFullScreen();
+                } else if (vid.webkitRequestFullScreen) {
+                    vid.webkitRequestFullScreen();
+                }  
+            }
+       </script>
+      <?php 
+    }
+
+    public function getUrlServerOk($url)
+    {
+        $html_anime = file_get_contents($url) ;
+        $resto = self::getTags($html_anime,'"https://ok.ru','";','<br>');
+
+        $video = explode('<br>',$resto);
+        echo '<hr>';
+        foreach ($video as $url_video) {
+            if (strpos($url_video,'ttp')) {
+                $url_video = str_replace(";","",$url_video);
+                $url_video = str_replace('"',"",$url_video);
+                echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO OK </a><br>';                   
+            }
+        }
+        echo '<hr>';
+
+
     }
 
     public function getUrlMediafire($url)
