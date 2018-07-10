@@ -181,12 +181,12 @@ class AnimeFlv
             //     }
             // }
           
-            echo '<hr>';
-            $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;
-            $video = self::getTags($html_anime,"<video",'</video>');
-            $video = self::getTags($video,'src="','"','<br>','only');
-            $video = explode('<br>',$video);
-            echo '<pre>'; var_dump( $video ); echo '</pre>'; die;/***HERE***/  
+            // echo '<hr>';
+            // $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;
+            // $video = self::getTags($html_anime,"<video",'</video>');
+            // $video = self::getTags($video,'src="','"','<br>','only');
+            // $video = explode('<br>',$video);
+            // echo '<pre>'; var_dump( $video ); echo '</pre>'; die;/***HERE***/  
             ?>
             <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>  
            <?php
