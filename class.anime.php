@@ -116,7 +116,7 @@ class AnimeFlv
             $url = 'http' . $value;
             if (strpos($url,'efire.php')) {// Mediafire
                  self::getUrlMediafire($url);              
-            }else if(strpos($url,'server=rv-DELETE')) {//RV
+            }else if(strpos($url,'server=rv')) {//RV
                 self::getUrlServerRV($url);
             }else if(strpos($url,'server=mega')) {//Mega
                 self::getUrlServerMega($url);
@@ -214,26 +214,25 @@ class AnimeFlv
     {
         if ( isset($url)) {
             $code_video = explode('value=',$url);
-            // if (isset($code_video[1])) {
-            //     // https://www.rapidvideo.com/e/FT2X37EBZV&q=480p
-            //     $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;                
-            //     // $html_anime = str_replace(' ','',$html_anime);
-            //     // $final = self::getTags($html_anime,"https://www.rapidvideo.com",'";');
-
-            //     // $resto =  explode('<br>',$final);
-            //     // $resto = $resto[0] .'para_que_muestre_tres_resoluciones';
-            //     // $html_anime = file_get_contents( trim($resto)) ;
+            if (isset($code_video[1])) {
+                // https://www.rapidvideo.com/e/FT2X37EBZV&q=480p
+                $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;
                
-            //     $video = self::getTags($html_anime,"<video",'</video>');
-            //     $video = self::getTags($video,'src="','"','<br>','only');
-            //     $video = explode('<br>',$video);
-            //     echo '<hr>';
-            //     foreach ($video as $url_video) {
-            //         if (strpos($url_video,'ttp')) {
-            //             echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO RV </a><br>';                   
-            //         }
-            //     }
-            // }
+                if (strpos($html_anime,"<video")) {
+                    $video = self::getTags($html_anime,"<video",'</video>');
+                    $video = self::getTags($video,'src="','"','<br>','only');
+                    $video = explode('<br>',$video);
+                    echo '<hr>';
+                    foreach ($video as $url_video) {
+                        if (strpos($url_video,'ttp')) {
+                            echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO RV </a><br>';                   
+                        }
+                    }
+                }else {
+                    echo '<a href="#" target="__black">VIEW VIDEO RV  NOT :/</a><br>';  
+                }
+               
+            }
             
             // echo '<hr>';
             // $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full");
@@ -243,7 +242,7 @@ class AnimeFlv
             // $video = explode('<br>',$video);
             // echo '<pre>'; var_dump( $video ); echo '</pre>'; die;/***HERE***/  
             ?>
-            <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>  
+            <!-- <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>   -->
            <?php
         } 
 
