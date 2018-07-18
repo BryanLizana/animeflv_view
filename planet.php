@@ -11,6 +11,8 @@ $html_anime = file_get_contents($url) ;
 $html_anime = str_replace("<header","XXXXXXXXXX<header",$html_anime);
 $html_anime = $AnimeFlv->removeScript($html_anime,'<section class="editableBanner','</section>');
 $html_anime = $AnimeFlv->removeScript($html_anime,'<header','</header>');
+$html_anime = $AnimeFlv->removeScript($html_anime,'title="<h5','" ');
+
 // $html_anime = $AnimeFlv->removeScript($html_anime,'<li class="pure-u new-feature">','</li>');
 
 $html_anime = str_replace('XXXXXXXXXX',file_get_contents('./header-planet.html'),$html_anime);
@@ -24,6 +26,7 @@ $final = str_replace('https://www.anime-planet.com/users/','?url=/users/',$final
 $final = str_replace('log in','<a href="planet.php">HOME PLANET</a> <br>
 <a href="planet.php?url=/users/BryanLizana/anime/watching">View List BryanLizana</a>
 ',$final);
+$final = str_replace('"https://www.anime-planet.com/"','"'.$url.'"',$final);
 
 $url_search= "#";
 if (strpos($_REQUEST['url'],'anime/')) {

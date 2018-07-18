@@ -218,6 +218,7 @@ class AnimeFlv
                 // https://www.rapidvideo.com/e/FT2X37EBZV&q=480p
                 $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;
                
+                // if (false) {
                 if (strpos($html_anime,"<video")) {
                     $video = self::getTags($html_anime,"<video",'</video>');
                     $video = self::getTags($video,'src="','"','<br>','only');
@@ -229,7 +230,10 @@ class AnimeFlv
                         }
                     }
                 }else {
-                    echo '<a href="#" target="__black">VIEW VIDEO RV  NOT :/</a><br>';  
+                    echo '<span">VIEW VIDEO RV  NOT :/</span><br>';
+                    ?>
+                    <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>  
+                    <?php
                 }
                
             }

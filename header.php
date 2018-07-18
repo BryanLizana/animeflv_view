@@ -56,7 +56,7 @@ a{
 
 <a href="https://animeflv.net<?php echo $_GET['url'] ?>" style="
     display: contents; */
-" target="__black">VIEW PAGE ANIMEFLV</a>
+" >VIEW PAGE ANIMEFLV</a>
 <br>
 <br>
 <!-- <a href="planet.php">HOME PLANET</a> <br> -->
