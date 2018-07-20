@@ -12,6 +12,6 @@ function get_url_contents($url) {
     return $ret;
 }
 
-$conten =  file_get_contents('http://jkanime.net/');
+$conten =  get_url_contents('http://jkanime.net/');
 
 echo '<pre>'; var_dump( $conten ); echo '</pre>'; die;/***HERE***/ 

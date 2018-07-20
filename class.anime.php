@@ -153,28 +153,32 @@ class AnimeFlv
         $resto = str_replace("';","",$resto);
         $url_video = self::get_url_contents('https://s3.animeflv.com/'.$resto);
         $url_video =  json_decode( $url_video, true );
-      ?>
-       <video id="myVideo" width="100%" src="<?php echo  $url_video['file'] ?>" onclick="togglePause()" ></video>  
-       <input type="button" onclick="playVid()" value="Play" class="btn">
-       <input type="button" onclick="pauseVid()" value="Pause" class="btn">
-       <input type="button" onclick="goFullscreen()" value="Full Screen" class="btn">
-       <script>
-           var vid = document.getElementById("myVideo"); 
-            function playVid() { 
-                vid.play(); 
-            } 
-            function pauseVid() { 
-                vid.pause(); 
-            }
-            function goFullscreen() {
-                if (vid.mozRequestFullScreen) {
-                    vid.mozRequestFullScreen();
-                } else if (vid.webkitRequestFullScreen) {
-                    vid.webkitRequestFullScreen();
-                }  
-            }
-       </script>
-      <?php 
+        if (!empty($url_video['file'])) {                
+        ?>
+        <video id="myVideo" width="100%" src="<?php echo  $url_video['file'] ?>" onclick="togglePause()" ></video>  
+        <input type="button" onclick="playVid()" value="Play" class="btn">
+        <input type="button" onclick="pauseVid()" value="Pause" class="btn">
+        <input type="button" onclick="goFullscreen()" value="Full Screen" class="btn">
+        <script>
+            var vid = document.getElementById("myVideo"); 
+                function playVid() { 
+                    vid.play(); 
+                } 
+                function pauseVid() { 
+                    vid.pause(); 
+                }
+                function goFullscreen() {
+                    if (vid.mozRequestFullScreen) {
+                        vid.mozRequestFullScreen();
+                    } else if (vid.webkitRequestFullScreen) {
+                        vid.webkitRequestFullScreen();
+                    }  
+                }
+        </script>
+        <?php 
+      }else {
+          echo $url_video . '<br>';
+      }
     }
 
     public function getUrlServerOk($url)
