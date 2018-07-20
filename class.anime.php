@@ -1,13 +1,25 @@
 <?php 
-
 class AnimeFlv 
 {
 
     public $debug = 0;
     public $text_full ;
     public $echo_resto_iframe = array();
-    public $chage_url = 1;
+    public $chage_url = 1;    
+
+    static function get_url_contents($url) {
+        $crl = curl_init();
     
+        curl_setopt($crl, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)');
+        curl_setopt($crl, CURLOPT_URL, $url);
+        curl_setopt($crl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($crl, CURLOPT_CONNECTTIMEOUT, 5);
+    
+        $ret = curl_exec($crl);
+        curl_close($crl);
+        return $ret;
+    }
+
     public function removeScript($text_full,$text_before="<script",$text_after="</script>",$menosSiTiene = "Palabra A coincidir que irá al final")
     {        
         $text_full_bu = $text_full;
@@ -134,12 +146,12 @@ class AnimeFlv
 
     public function getUrlServerIzanagi($url)
     {
-        $html_anime = file_get_contents($url) ;
+        $html_anime = self::get_url_contents($url) ;
         $resto = self::getTags($html_anime,"check.php?","';",'<br>');
         $resto = explode('<br>',$resto);
         $resto = $resto[0];
         $resto = str_replace("';","",$resto);
-        $url_video = file_get_contents('https://s3.animeflv.com/'.$resto);
+        $url_video = self::get_url_contents('https://s3.animeflv.com/'.$resto);
         $url_video =  json_decode( $url_video, true );
       ?>
        <video id="myVideo" width="100%" src="<?php echo  $url_video['file'] ?>" onclick="togglePause()" ></video>  
@@ -167,7 +179,7 @@ class AnimeFlv
 
     public function getUrlServerOk($url)
     {
-        $html_anime = file_get_contents($url) ;
+        $html_anime = self::get_url_contents($url) ;
         $resto = self::getTags($html_anime,'"https://ok.ru','";','<br>');
 
         $video = explode('<br>',$resto);
@@ -188,7 +200,7 @@ class AnimeFlv
     {
         // efire.php
         if ( isset($url)) {
-            $html_anime = file_get_contents($url) ;
+            $html_anime = self::get_url_contents($url) ;
             $final = self::removeScript($html_anime,'<script','</script>','www.mediafire.com');        
             $resto = self::getTags($final,"<script",'</script>');
             $resto = str_replace("$(window).width()",'"95%"', $resto);
@@ -216,7 +228,7 @@ class AnimeFlv
             $code_video = explode('value=',$url);
             if (isset($code_video[1])) {
                 // https://www.rapidvideo.com/e/FT2X37EBZV&q=480p
-                $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;
+                $html_anime = self::get_url_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;
                
                 // if (false) {
                 if (strpos($html_anime,"<video")) {
@@ -239,7 +251,7 @@ class AnimeFlv
             }
             
             // echo '<hr>';
-            // $html_anime = file_get_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full");
+            // $html_anime = self::get_url_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full");
             // echo '<pre>'; var_dump( $html_anime ); echo '</pre>'; die;/***HERE***/ 
             // $video = self::getTags($html_anime,"<video",'</video>');
             // $video = self::getTags($video,'src="','"','<br>','only');
@@ -255,7 +267,7 @@ class AnimeFlv
     public function getUrlServerMega($url)
     {
         if ( isset($url)) {
-            $html_anime = file_get_contents($url) ;
+            $html_anime = self::get_url_contents($url) ;
             $final = self::getTags($html_anime,"https://mega.nz",'";');
             $resto =  explode('<br>',$final);
             foreach ($resto as $url) {
