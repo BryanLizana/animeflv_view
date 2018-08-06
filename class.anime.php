@@ -342,7 +342,7 @@ class AnimeFlv
         try {
             // $viewsAll = array_unique($viewsAll);
 
-            if (count($viewsAll) < 10) {
+            if (count($viewsAll) < 100) {
                 $myfile = fopen(__DIR__."/json/view.json", 'w+') or die('nop');
                 $txt = json_encode( $viewsAll );
                 fwrite($myfile, $txt);
