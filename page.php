@@ -18,8 +18,11 @@ if (!empty($html_anime)) {
 $final = $AnimeFlv->removeScript($html_anime);
 
 $descargas_url = $AnimeFlv->getTags($final,'<table','</table>');
-$descargas_url =  $AnimeFlv->getTags($descargas_url,'<a','</a>');
+$descargas_url =  $AnimeFlv->getTags($descargas_url,'<a','</a>','<br>');
 
+$descargas_url = explode('<br>',$descargas_url);
+$descargas_url =  array_unique($descargas_url);
+$descargas_url =  implode('',$descargas_url);
 
 $final = $AnimeFlv->removeScript($final,'<table','</table>');
 $AnimeFlv->chage_url = 1;

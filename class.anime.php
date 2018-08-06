@@ -84,7 +84,8 @@ class AnimeFlv
                             $no_excluido = true;
                             foreach (array('contraseña','Inicio','Registrate','INICIAR SESION','Directorio Anime','Opción',
                                             'AnimeFLV','Cuevana','Términos y Condiciones','Politica y Privacidad','Política de Privacidad',
-                                            'REPORTAR</span>','Estrellas','BtnNw','uploads/avatars/','animeflv/img/chat.png','FACEBOOK','TWITTER','Mas','aria-label="Close','class="fa-youtube"') as  $value) {
+                                            'REPORTAR</span>','Estrellas','BtnNw','uploads/avatars/','animeflv/img/chat.png','FACEBOOK','TWITTER','Mas','aria-label="Close','class="fa-youtube"'
+                                            ,'Temas para Wordpress') as  $value) {
                                 if (strpos($resto,$value)) {
                                     $no_excluido =  false;
                                     break;
@@ -192,7 +193,8 @@ class AnimeFlv
             if (strpos($url_video,'ttp')) {
                 $url_video = str_replace(";","",$url_video);
                 $url_video = str_replace('"',"",$url_video);
-                echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO OK </a><br>';                   
+                echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO OK </a><br>';  
+                break;                 
             }
         }
         echo '<hr>';
@@ -232,6 +234,7 @@ class AnimeFlv
             $code_video = explode('value=',$url);
             if (isset($code_video[1])) {
                 // https://www.rapidvideo.com/e/FT2X37EBZV&q=480p
+                
                 $html_anime = self::get_url_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;
                
                 // if (false) {
@@ -247,6 +250,7 @@ class AnimeFlv
                     }
                 }else {
                     echo '<span">VIEW VIDEO RV  NOT :/</span><br>';
+                    echo '<a><span>view-source:https://www.rapidvideo.com/e/'. $code_video[1].'&q=full</span></a>'
                     ?>
                     <!-- <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>   -->
                     <?php
@@ -276,11 +280,11 @@ class AnimeFlv
             $resto =  explode('<br>',$final);
             foreach ($resto as $url) {
                if (!empty($url) && strpos($url,'ttps://mega.nz')) {
-                  echo '<a href="'.$url.'" target="__black">VIEW VIDEO  MEGA </a><br>';                  
+                  echo '<a href="'.$url.'" target="__black">VIEW VIDEO  MEGA </a><br>';  
+                  break;                
                }
             }
             echo '<hr>';
-
         } 
     }
 
