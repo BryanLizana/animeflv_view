@@ -248,7 +248,7 @@ class AnimeFlv
                 }else {
                     echo '<span">VIEW VIDEO RV  NOT :/</span><br>';
                     ?>
-                    <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>  
+                    <!-- <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>   -->
                     <?php
                 }
                

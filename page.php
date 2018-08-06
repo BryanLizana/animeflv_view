@@ -45,12 +45,12 @@ echo $descargas_url;
 
 // <!-- Iframes -->
 ?>
-<button onclick="initShowDivTwo(event)" class=" btn-success">Click Me to View Iframes</button>
+<!-- <button onclick="initShowDivTwo(event)" class=" btn-success">Click Me to View Iframes</button>
  <div id="ShowTwo"> 
 <?php
-$AnimeFlv->echoIframe();
+// $AnimeFlv->echoIframe();
 ?> 
- </div>   
+ </div>    -->
 
 <a href="./desactive.anime.php?url=<?php echo $_REQUEST['url'] ?>" class=" btn-danger" >Desactive Anime List</a>
 
