@@ -1,5 +1,7 @@
 <?php 
-
+//   ini_set('display_errors', 1);
+//   ini_set('display_startup_errors', 1);
+//   error_reporting(E_ALL); 
 class classAnime 
 {
     public $textohtml;
@@ -87,6 +89,8 @@ class classAnime
     public function getTag($textohtml,$text_before,$text_after = false,$tagUnidor= "<br> \n\r", $mode = 'completo', $menosSiTieneThisWord = false)
     {
 
+        $textohtml = " ".$textohtml." ";
+
         if (strpos($textohtml,'figure>')) {
             $textohtml = self::removeTag($textohtml,'<figure>','</figure>');
         }
@@ -98,14 +102,26 @@ class classAnime
             $text_after = str_replace('<','</',$text_before);
         }
 
+        if ($mode == 'completo') {
+            $mas_inixio = 0;
+            $mas_finx = 0;
+        }else {
+            $mas_inixio = strlen($text_before);
+            $mas_finx = strlen($text_after);
+        }
+
         while ($i) {
             $textohtml_resto_init = strpos($textohtml,$text_before); //mientras text_before_exist
-
-            $textohtml_resto_end = strpos($textohtml,$text_after);
+            // para evitar que el text_after sea el próximo tag y no uno anterior (Para los casos de " o />)
+            $textohtml_para_text_after = substr($textohtml,$textohtml_resto_init + $mas_inixio ); //texto a remover
+            $textohtml_resto_end = strpos($textohtml_para_text_after,$text_after);
 
            if ($textohtml_resto_init) {
-                $textohtml_resto = substr($textohtml,$textohtml_resto_init,($textohtml_resto_end + strlen($text_after)) -  $textohtml_resto_init); //texto a remover
+                //$textohtml_resto = substr($textohtml,$textohtml_resto_init,($textohtml_resto_end + strlen($text_after)) -  $textohtml_resto_init ); //texto a remover
+                $textohtml_resto = substr($textohtml,$textohtml_resto_init + $mas_inixio ,($textohtml_resto_end + strlen($text_after) ) - $mas_finx ); //texto a remover                
+                $textohtml_resto_alternative = substr($textohtml,$textohtml_resto_init ,($textohtml_resto_end + strlen($text_after) )   ); //texto a remover                
                 $addtexthtml = true;
+
                 if ($menosSiTieneThisWord) {
                     if (is_array($menosSiTieneThisWord)) {
                        foreach ($menosSiTieneThisWord as $value) {
@@ -116,11 +132,11 @@ class classAnime
                        }
                     }else if (strpos($textohtml_resto,$menosSiTieneThisWord)) {
                         $addtexthtml = false;
-                    }                      
+                    }               
                 }
                    
                 if ($addtexthtml) {
-                    $textohtml =  str_replace($textohtml_resto,"",$textohtml);
+                    $textohtml =  str_replace($textohtml_resto_alternative,"",$textohtml);
                     
                     if (strpos($textohtml_resto,'http://ouo.io/s/y0d65LCP?s=') && $text_before == "<a") {
                         try {
@@ -147,7 +163,7 @@ class classAnime
             } 
 
             $i =  $textohtml_resto_init;
-            $contador_break++;            
+            $contador_break++;     
             if ($contador_break == 10000) {
                 echo '<pre>'; var_dump( 'Ey, here it is a trouble' ); echo '</pre>'; die; /***HERE***/
             }
@@ -162,4 +178,165 @@ class classAnime
 
     }
 
+  
+    static function startIframe($text_full)
+    {
+        // $this->debug=1;
+        $resto = self::getTag($text_full,'src="','"','','single');
+        $resto = explode('http',$resto);
+        foreach ($resto as  $value) {  
+            $url = 'http' . $value;
+            if (strpos($url,'efire.php')) {// Mediafire
+                 self::getUrlMediafire($url);              
+            }else if(strpos($url,'server=rv')) {//RV
+                self::getUrlServerRV($url);
+            }else if(strpos($url,'server=mega')) {//Mega
+                self::getUrlServerMega($url);
+            }else if(strpos($url,'server=streamango')) {//Manho - Se mantiene la publicidad :/
+                // Muy complicado xd
+            }else if(strpos($url,'server=ok')) {//Manho - Se mantiene la publicidad :/
+                self::getUrlServerOk($url);
+            }else if(strpos($url,'s=izanagi')) {//Manho - Se mantiene la publicidad :/
+                self::getUrlServerIzanagi($url);
+            }elseif (!empty($value)) {
+                // $this->echo_resto_iframe[] = $url;
+            }           
+        }     
+    }
+
+    public function getUrlServerIzanagi($url)
+    {
+        $html_anime = self::get_url_contents($url) ;
+        $resto = self::getTag($html_anime,"check.php?","';",'<br>');
+        $resto = explode('<br>',$resto);
+        $resto = $resto[0];
+        $resto = str_replace("';","",$resto);
+        $url_video = self::get_url_contents('https://s3.animeflv.com/'.$resto);
+        $url_video =  json_decode( $url_video, true );
+        if (!empty($url_video['file'])) {                
+        ?>
+        <video id="myVideo" width="100%" src="<?php echo  $url_video['file'] ?>" onclick="togglePause()" ></video>  
+        <input type="button" onclick="playVid()" value="Play" class="btn">
+        <input type="button" onclick="pauseVid()" value="Pause" class="btn">
+        <input type="button" onclick="goFullscreen()" value="Full Screen" class="btn">
+        <script>
+            var vid = document.getElementById("myVideo"); 
+                function playVid() { 
+                    vid.play(); 
+                } 
+                function pauseVid() { 
+                    vid.pause(); 
+                }
+                function goFullscreen() {
+                    if (vid.mozRequestFullScreen) {
+                        vid.mozRequestFullScreen();
+                    } else if (vid.webkitRequestFullScreen) {
+                        vid.webkitRequestFullScreen();
+                    }  
+                }
+        </script>
+        <?php 
+      }else {
+          echo $url_video . '<br>';
+      }
+    }
+    public function getUrlServerOk($url)
+    {
+        $html_anime = self::get_url_contents($url) ;
+        $resto = self::getTag($html_anime,'"https://ok.ru','";','<br>');
+        $video = explode('<br>',$resto);
+        echo '<hr>';
+        foreach ($video as $url_video) {
+            if (strpos($url_video,'ttp')) {
+                $url_video = str_replace(";","",$url_video);
+                $url_video = str_replace('"',"",$url_video);
+                echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO OK </a><br>';                   
+            }
+        }
+        echo '<hr>';
+    }
+    public function getUrlMediafire($url)
+    {
+        // efire.php
+        if ( isset($url)) {
+            $html_anime = self::get_url_contents($url) ;
+            $final = self::removeTag($html_anime,'<script','</script>','www.mediafire.com');        
+            $resto = self::getTag($final,"<script",'</script>');
+            $resto = str_replace("$(window).width()",'"95%"', $resto);
+            $resto = str_replace("$(window).height()",'"95%"', $resto);
+          ?> 
+
+        <div>
+            <div id="message"></div>
+            <div id="videoLoading"></div>
+            <div id="player"></div>
+            <div id="my-player"></div>
+            <!-- <input type="button" id="start" value="START"> -->
+            <button type="button" id="start" class=" btn-success" >START VIDEO MediaFire</button>
+        </div>
+            <?php
+            $resto = str_replace('}).fail(function()','XXXXXXXXXX } }).fail(function()', $resto );
+            $resto =  self::removeTag($resto,"var player","XXXXXXXXXX");            
+            echo $resto; //script mediafire
+        } 
+    }
+    public function getUrlServerRV($url)
+    {
+        if ( isset($url)) {
+            $code_video = explode('value=',$url);
+            if (isset($code_video[1])) {
+                // https://www.rapidvideo.com/e/FT2X37EBZV&q=480p
+                $html_anime = self::get_url_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full") ;
+                // if (false) {
+                if (strpos($html_anime,"<video")) {
+                    $video = self::getTag($html_anime,"<video",'</video>');
+                    $video = self::getTag($video,'src="','"','<br>','only');
+                    $video = explode('<br>',$video);
+                    echo '<hr>';
+                    foreach ($video as $url_video) {
+                        if (strpos($url_video,'ttp')) {
+                            echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO RV </a><br>';                   
+                        }
+                    }
+                }else {
+                    echo '<span">VIEW VIDEO RV  NOT :/</span><br>';
+                    ?>
+                    <!-- <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>   -->
+                    <?php
+                }
+               
+            }
+            
+            // echo '<hr>';
+            // $html_anime = self::get_url_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full");
+            // echo '<pre>'; var_dump( $html_anime ); echo '</pre>'; die;/***HERE***/ 
+            // $video = self::getTags($html_anime,"<video",'</video>');
+            // $video = self::getTags($video,'src="','"','<br>','only');
+            // $video = explode('<br>',$video);
+            // echo '<pre>'; var_dump( $video ); echo '</pre>'; die;/***HERE***/  
+            ?>
+            <!-- <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>   -->
+           <?php
+        } 
+    }
+    public function getUrlServerMega($url)
+    {
+        if ( isset($url)) {
+            $html_anime = self::get_url_contents($url) ;
+            $final = self::getTag($html_anime,"https://mega.nz",'";');
+            $resto =  explode('<br>',$final);
+            foreach ($resto as $url) {
+               if (!empty($url) && strpos($url,'ttps://mega.nz')) {
+                  echo '<a href="'.$url.'" target="__black">VIEW VIDEO  MEGA </a><br>';                  
+               }
+            }
+            echo '<hr>';
+        } 
+    }
+    public function echoIframe()
+    {
+      foreach ($this->echo_resto_iframe as  $value) {
+           echo '<iframe width="560" height="315" src="'.$value.'" frameborder="0" allowfullscreen></iframe> <hr>'."\n";
+      }
+    }
 }

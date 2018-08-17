@@ -4,8 +4,8 @@ require_once('../acore/class.anime.php');
 require_once('./templates/header.php');
 
 $html_anime = classAnime::get_url_contents('https://animeflv.net'.$_REQUEST['url']);
-// $html_anime_iframe = classAnime::getTag($html_anime,'<iframe','</iframe>');
 
+$html_anime_iframe = classAnime::getTag($html_anime,'<iframe','</iframe>');
 
 $html_anime = classAnime::removeTag($html_anime,'<script','</script>');
 $html_anime = classAnime::getTag($html_anime,'<table','</table>');
@@ -14,6 +14,9 @@ $descargas_url = explode('<br>',$html_anime);
 $descargas_url =  array_unique($descargas_url);
 $descargas_url =  implode('',$descargas_url);
 
+
+$html_anime = classAnime::startIframe($html_anime_iframe);
+echo $html_anime;
 ?>
 <!-- Temporalmente cerrado -->
 <button onclick="initShowDivOne(event)" class=" btn-success">Click Me to View Descargas</button>
@@ -111,6 +114,6 @@ $urlView_array = explode("/",$urlView);
             
         } catch (Exception $e) {
          $e->getMessage() ;
-         echo '<pre>'; var_dump( $e->getMessage() ); echo '</pre>'; die;/***HERE***/ 
+         echo '<pre>Hre'; var_dump( $e->getMessage() ); echo '</pre>'; die;/***HERE***/ 
         }
 ?>
