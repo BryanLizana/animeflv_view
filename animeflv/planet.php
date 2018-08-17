@@ -1,21 +1,21 @@
 <!-- https://www.anime-planet.com/ -->
 <?php 
-require_once('./class.anime.php');
+require_once('../acore/class.anime.php');
 
-$AnimeFlv =  new AnimeFlv();
+// $AnimeFlv =  new AnimeFlv();
 // require_once('./include.php');
 $url = str_replace(" ",'%20','https://www.anime-planet.com'.$_REQUEST['url'].'?'. http_build_query($_REQUEST) );
 
 $html_anime = file_get_contents($url) ;
 
 $html_anime = str_replace("<header","XXXXXXXXXX<header",$html_anime);
-$html_anime = $AnimeFlv->removeScript($html_anime,'<section class="editableBanner','</section>');
-$html_anime = $AnimeFlv->removeScript($html_anime,'<header','</header>');
-$html_anime = $AnimeFlv->removeScript($html_anime,'title="<h5','" ');
+$html_anime = classAnime::removeTag($html_anime,'<section class="editableBanner','</section>');
+$html_anime = classAnime::removeTag($html_anime,'<header','</header>');
+$html_anime = classAnime::removeTag($html_anime,'title="<h5','" ');
 
-// $html_anime = $AnimeFlv->removeScript($html_anime,'<li class="pure-u new-feature">','</li>');
+// $html_anime = classAnime::removeTag($html_anime,'<li class="pure-u new-feature">','</li>');
 
-$html_anime = str_replace('XXXXXXXXXX',file_get_contents('./header-planet.html'),$html_anime);
+$html_anime = str_replace('XXXXXXXXXX',file_get_contents('./templates/header-planet.html'),$html_anime);
 
 $final = str_replace('="/','="https://www.anime-planet.com/',$html_anime);
 $final = str_replace("='/","='https://www.anime-planet.com/",$final);
@@ -35,13 +35,13 @@ $url_search = "search.php?q=". str_replace('-','%20',$url_search);
 }
 // title="  "
 $final = str_replace('<div class="mainEntry">','XXXXX<div class="mainEntry">',$final);
-$final = $AnimeFlv->removeScript($final,"<a class='button screenshots'",'</a>');
+$final = classAnime::removeTag($final,"<a class='button screenshots'",'</a>');
 
 $final = str_replace('XXXXX','<a href="'.$url_search.'" target="__black" class="button">SEARCH ANIME IN FLV</a> <br>',$final);
 
 echo  $final; die;/***DIE***/ 
 
 ?>
-<?php
-require_once('./footer.php');
+<?php 
+require_once('./templates/footer.php');
 ?>

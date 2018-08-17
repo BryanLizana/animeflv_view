@@ -8,9 +8,7 @@
     <title>Anime Flv</title>
 
 </head>
-<body style="
-    margin:  16px;
-">
+<body style="margin:  16px;">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.typewatch.min.js"></script>
 <script type="text/javascript" src="js/functions.js"></script>
@@ -62,7 +60,7 @@ a{
 <!-- <a href="planet.php">HOME PLANET</a> <br> -->
 <a href="planet.php?url=/users/BryanLizana/anime/watching">View List BryanLizana</a>
 <br>
-<a href="index_index.php" >HOME</a>
+<a href="index.php" >HOME</a>
 
 <br><br>
 <form action="search.php" method="get">
