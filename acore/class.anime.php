@@ -159,7 +159,6 @@ class classAnime
                     $textohtml_resto_not_remove = str_replace($text_after,"TEXTOAFTERXXX",$textohtml_resto_not_remove);
                     $textohtml =  str_replace($textohtml_resto,$textohtml_resto_not_remove,$textohtml); 
                 }
-
             } 
 
             $i =  $textohtml_resto_init;
@@ -169,8 +168,7 @@ class classAnime
             }
         }  
         
-        if (isset($validTags)) {
-            
+        if (isset($validTags)) {            
             $textohtml = implode($tagUnidor,$validTags);
         }
 
@@ -178,10 +176,9 @@ class classAnime
 
     }
 
-  
+    // Anime Flv
     static function startIframe($text_full)
-    {
-        // $this->debug=1;
+    {        
         $resto = self::getTag($text_full,'src="','"','','single');
         $resto = explode('http',$resto);
         foreach ($resto as  $value) {  
@@ -240,6 +237,7 @@ class classAnime
           echo $url_video . '<br>';
       }
     }
+
     public function getUrlServerOk($url)
     {
         $html_anime = self::get_url_contents($url) ;
@@ -301,22 +299,11 @@ class classAnime
                 }else {
                     echo '<span">VIEW VIDEO RV  NOT :/</span><br>';
                     ?>
+                    <input type="text" name="" id="" value="<?php echo "https://www.rapidvideo.com/e/". $code_video[1]."&q=full" ?>">
                     <!-- <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>   -->
                     <?php
-                }
-               
-            }
-            
-            // echo '<hr>';
-            // $html_anime = self::get_url_contents("https://www.rapidvideo.com/e/". $code_video[1]."&q=full");
-            // echo '<pre>'; var_dump( $html_anime ); echo '</pre>'; die;/***HERE***/ 
-            // $video = self::getTags($html_anime,"<video",'</video>');
-            // $video = self::getTags($video,'src="','"','<br>','only');
-            // $video = explode('<br>',$video);
-            // echo '<pre>'; var_dump( $video ); echo '</pre>'; die;/***HERE***/  
-            ?>
-            <!-- <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>   -->
-           <?php
+                }               
+            }            
         } 
     }
     public function getUrlServerMega($url)
