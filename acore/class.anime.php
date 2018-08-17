@@ -297,9 +297,10 @@ class classAnime
                         }
                     }
                 }else {
+                    // view-source:https://www.rapidvideo.com/e/FK4UCNFLW2&q=full
                     echo '<span">VIEW VIDEO RV  NOT :/</span><br>';
                     ?>
-                    <input type="text" name="" id="" value="<?php echo "https://www.rapidvideo.com/e/". $code_video[1]."&q=full" ?>">
+                    <input type="text" name="" id="" value="view-source:<?php echo "https://www.rapidvideo.com/e/". $code_video[1]."&q=full" ?>">
                     <!-- <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>   -->
                     <?php
                 }               
