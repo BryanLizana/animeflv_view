@@ -1,7 +1,5 @@
 <?php 
-//   ini_set('display_errors', 1);
-//   ini_set('display_startup_errors', 1);
-//   error_reporting(E_ALL); 
+
 class classAnime 
 {
     public $textohtml;
@@ -31,9 +29,9 @@ class classAnime
         }
 
         
-        while ($i) {
+        while ($i) {           
             $textohtml_resto_init = strpos($textohtml,$text_before); //mientras text_before_exist
-
+           
             // para evitar que el text_after sea el próximo tag y no uno anterior (Para los casos de " o />)
             $textohtml_para_text_after = substr($textohtml,$textohtml_resto_init ); //texto a remover
 
@@ -86,7 +84,7 @@ class classAnime
         return $textohtml;
     }
 
-    public function getTag($textohtml,$text_before,$text_after = false,$tagUnidor= "<br> \n\r", $mode = 'completo', $menosSiTieneThisWord = false)
+    public function getTag($textohtml,$text_before,$text_after = false,$tagUnidor= "<br> \n\r", $mode = 'completo', $menosSiTieneThisWord = false,$debug =  false)
     {
 
         $textohtml = " ".$textohtml." ";
@@ -115,8 +113,8 @@ class classAnime
             // para evitar que el text_after sea el próximo tag y no uno anterior (Para los casos de " o />)
             $textohtml_para_text_after = substr($textohtml,$textohtml_resto_init + $mas_inixio ); //texto a remover
             $textohtml_resto_end = strpos($textohtml_para_text_after,$text_after);
-
-           if ($textohtml_resto_init) {
+            
+           if ($textohtml_resto_init) {            
                 //$textohtml_resto = substr($textohtml,$textohtml_resto_init,($textohtml_resto_end + strlen($text_after)) -  $textohtml_resto_init ); //texto a remover
                 $textohtml_resto = substr($textohtml,$textohtml_resto_init + $mas_inixio ,($textohtml_resto_end + strlen($text_after) ) - $mas_finx ); //texto a remover                
                 $textohtml_resto_alternative = substr($textohtml,$textohtml_resto_init ,($textohtml_resto_end + strlen($text_after) )   ); //texto a remover                
@@ -135,7 +133,7 @@ class classAnime
                     }               
                 }
                    
-                if ($addtexthtml) {
+                if ($addtexthtml) {                            
                     $textohtml =  str_replace($textohtml_resto_alternative,"",$textohtml);
                     
                     if (strpos($textohtml_resto,'http://ouo.io/s/y0d65LCP?s=') && $text_before == "<a") {
@@ -149,9 +147,9 @@ class classAnime
                             echo '<pre>'; var_dump( $textohtml_resto ); echo '</pre>'; die;/***HERE***/ 
                         }
                     }
-    
-                    if (!strpos($textohtml_resto,"></a>")) {
-                         $validTags[] = $textohtml_resto; 
+                                                            
+                    if (!strpos($textohtml_resto,"></a>") || $debug == true) {
+                         $validTags[] = $textohtml_resto;                         
                     }
 
                 }else {
