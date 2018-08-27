@@ -11,6 +11,10 @@ $html_anime = classAnime::removeTag($html_anime,'<script','</script>');
 
 $next = classAnime::getTag($html_anime,'<a href="/ver/','SIGUIENTE</a>',null,'completo',null,true);
 
+if ($next == '<a href="/ver') {
+$next = classAnime::getTag($html_anime,'<a href="/ver/','ANTERIOR</a>',null,'completo',null,true);    
+}
+
 $html_anime = classAnime::getTag($html_anime,'<table','</table>');
 $html_anime = classAnime::getTag($html_anime,'<a','</a>');
 $descargas_url = explode('<br>',$html_anime);
