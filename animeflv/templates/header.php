@@ -65,9 +65,7 @@ a{
 
 </style>
 
-<a href="https://animeflv.net<?php echo $_GET['url'] ?>" style="
-    display: contents; */
-" >VIEW PAGE ANIMEFLV</a>
+<a href="https://animeflv.net<?php echo $_GET['url'] ?>" style="display: contents; */" >VIEW PAGE ANIMEFLV</a>
 <br>
 <br>
 <!-- <a href="planet.php">HOME PLANET</a> <br> -->
