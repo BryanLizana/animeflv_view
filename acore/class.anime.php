@@ -308,6 +308,33 @@ class classAnime
             }            
         } 
     }
+
+    public function getUrlServerRVCopy($url)
+    {
+        if ( isset($url)) {
+                $html_anime = self::get_url_contents($url."&q=full") ;
+                // if (false) {
+                if (strpos($html_anime,"<video")) {
+                    $video = self::getTag($html_anime,"<video",'</video>');
+                    $video = self::getTag($video,'src="','"','<br>','only');
+                    $video = explode('<br>',$video);
+                    echo '<hr>';
+                    foreach ($video as $url_video) {
+                        if (strpos($url_video,'ttp')) {
+                            echo '<a href="'.$url_video.'" target="__black">VIEW VIDEO RV </a><br><br><br>';                   
+                        }
+                    }
+                }else {
+                    // view-source:https://www.rapidvideo.com/e/FK4UCNFLW2&q=full
+                    echo '<span">VIEW VIDEO RV  NOT :/</span><br>';
+                    ?>
+                    <input type="text" name="" id="" value="view-source:<?php echo "https://www.rapidvideo.com/e/". $code_video[1]."&q=full" ?>">
+                    <!-- <iframe src="https://www.rapidvideo.com/e/<?php echo $code_video[1] ?>&q=full" frameborder="0"></iframe>   -->
+                    <?php
+                }                          
+        } 
+    }
+
     public function getUrlServerMega($url)
     {
         if ( isset($url)) {
