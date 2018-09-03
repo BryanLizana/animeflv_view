@@ -12,10 +12,13 @@ $html_anime_iframe = classAnime::getTag($html_anime,'<iframe','</iframe>');
 
 $html_anime = classAnime::removeTag($html_anime,'<script','</script>');
 
-$next = classAnime::getTag($html_anime,'<a href="/ver/','SIGUIENTE</a>',null,'completo',null,true);
 
-if ($next == '<a href="/ver') {
-$next = classAnime::getTag($html_anime,'<a href="/ver/','ANTERIOR</a>',null,'completo',null,true);    
+
+if (strpos($html_anime,'a href="/ver') &&  (strpos($html_anime,'SIGUIENTE') ||  strpos($html_anime,'ANTERIOR')   )) {
+    $next = classAnime::getTag($html_anime,'<a href="/ver/','SIGUIENTE</a>',null,'completo',null,true);
+    if ($next == '<a href="/ver') {
+        $next = classAnime::getTag($html_anime,'<a href="/ver/','ANTERIOR</a>',null,'completo',null,true);    
+    }
 }
 
 $html_anime = classAnime::getTag($html_anime,'<table','</table>');
