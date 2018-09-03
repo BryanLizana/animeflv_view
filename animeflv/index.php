@@ -9,6 +9,7 @@ $no =  array('Directorio Anime','Temas para Wordpress','Cuevana','Términos y Co
             'AnimeFLV');
 
 $html_anime = classAnime::getTag($html_anime,'<a ','</a>',"<br> \n\r",'completo',$no);
+$html_anime = classAnime::removeTag($html_anime,'TEXTOBEFOREXXX','TEXTOAFTERXXX');
 
 
 

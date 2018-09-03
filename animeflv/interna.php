@@ -10,6 +10,8 @@ $no =  array('Registrate','¿Olvidaste tu contraseña?','Inicio','Directorio Ani
             'Mas','AnimeFLV','Temas para Wordpress','Cuevana','Términos y Condiciones','Politica y Privacidad','Política de Privacidad');
 
 $html_anime = classAnime::getTag($html_anime,'<a ','</a>',"<br> \n\r",'completo',$no);
+$html_anime = classAnime::removeTag($html_anime,'TEXTOBEFOREXXX','TEXTOAFTERXXX');
+
 $html_anime = str_replace('/browse?','search.php?',$html_anime);
 
 echo $html_anime;

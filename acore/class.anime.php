@@ -128,12 +128,13 @@ class classAnime
                                 break;
                             }
                        }
+
                     }else if (strpos($textohtml_resto,$menosSiTieneThisWord)) {
                         $addtexthtml = false;
                     }               
                 }
                    
-                if ($addtexthtml) {                            
+                if ($addtexthtml) {    
                     $textohtml =  str_replace($textohtml_resto_alternative,"",$textohtml);
                     
                     if (strpos($textohtml_resto,'http://ouo.io/s/y0d65LCP?s=') && $text_before == "<a") {
@@ -146,16 +147,17 @@ class classAnime
                             $textohtml_resto = json_encode( $e );
                             echo '<pre>'; var_dump( $textohtml_resto ); echo '</pre>'; die;/***HERE***/ 
                         }
-                    }
-                                                            
-                    if (!strpos($textohtml_resto,"></a>") || $debug == true) {
-                         $validTags[] = $textohtml_resto;                         
-                    }
+                    }                                                                            
 
                 }else {
                     $textohtml_resto_not_remove = str_replace($text_before,"TEXTOBEFOREXXX",$textohtml_resto);
                     $textohtml_resto_not_remove = str_replace($text_after,"TEXTOAFTERXXX",$textohtml_resto_not_remove);
                     $textohtml =  str_replace($textohtml_resto,$textohtml_resto_not_remove,$textohtml); 
+                    $textohtml_resto =  $textohtml_resto_not_remove;                
+                }
+
+                if (!strpos($textohtml_resto,"></a>") || $debug == true) {
+                    $validTags[] = $textohtml_resto;                         
                 }
             } 
 
@@ -168,7 +170,8 @@ class classAnime
         
         if (isset($validTags)) {            
             $textohtml = implode($tagUnidor,$validTags);
-        }
+        }      
+
 
         return $textohtml;
 
@@ -324,5 +327,52 @@ class classAnime
       foreach ($this->echo_resto_iframe as  $value) {
            echo '<iframe width="560" height="315" src="'.$value.'" frameborder="0" allowfullscreen></iframe> <hr>'."\n";
       }
+    }
+
+    public function markerView($urlView)
+    {
+        $urlView_array = explode("/",$urlView);
+        $view_anime_name = $urlView_array[count($urlView_array) -1 ];
+        //get cap
+        $cap = explode("-",$view_anime_name);
+        $cap = $cap[count($cap) - 1];
+        if (is_numeric($cap)) {
+            $view_anime_name =  str_replace($cap,'',$view_anime_name);
+            $view_anime_name =  ucwords(str_replace('-',' ',$view_anime_name));
+            $view_anime_name =  trim($view_anime_name);
+        }
+        $urlView = array('name' => $view_anime_name,'cap' => $urlView ,'date'=> date('Y-m-d'),'number'=>$cap );
+        $views = file_get_contents("../animeflv/json/view.json");
+        $views = json_decode($views,true);
+        if (!is_array($views)) {
+            $viewsAll[] = $urlView;
+        }else{     
+            $push = true;
+            for ($i=0; $i < count($views) ; $i++) { 
+                if ($views[$i]['name'] == $urlView['name'] ) { //update cap
+                    // TODO: Poner al final o principio, quitar y push array
+                    $views[$i] = $urlView ;
+                    $push = false;
+                }
+            }      
+            if ( $push == true) {
+                array_push($views,$urlView);
+            }
+            $viewsAll = $views; 
+        }
+        try {
+            // $viewsAll = array_unique($viewsAll);
+            if (count($viewsAll) < 300) {
+                $myfile = fopen("../animeflv/json/view.json", 'w+') or die('nop');
+                $txt = json_encode( $viewsAll );
+                fwrite($myfile, $txt);
+                fclose($myfile);
+            }
+            
+        } catch (Exception $e) {
+         $e->getMessage() ;
+         echo '<pre>'; var_dump( $e->getMessage() ); echo '</pre>'; die;/***HERE***/ 
+        } 
+       
     }
 }

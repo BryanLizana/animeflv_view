@@ -3,6 +3,9 @@
 require_once('../acore/class.anime.php');
 require_once('./templates/header.php');
 
+
+classAnime::markerView($_REQUEST['url']);
+
 $html_anime = classAnime::get_url_contents('https://animeflv.net'.$_REQUEST['url']);
 
 $html_anime_iframe = classAnime::getTag($html_anime,'<iframe','</iframe>');
@@ -23,6 +26,11 @@ $descargas_url =  implode('',$descargas_url);
 
 
 $html_anime = classAnime::startIframe($html_anime_iframe);
+
+$next = str_replace('/ver/','page.php?url=/ver/',$next);
+$next = str_replace('/browse','#',$next);
+$next = str_replace('/anime/','interna.php?url=/anime/',$next);
+
 echo $next;
 echo $html_anime;
 ?>
