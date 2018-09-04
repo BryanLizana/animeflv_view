@@ -7,14 +7,11 @@ $html_anime = classAnime::getTag($html_anime,'<ul','</ul>',"<br> \n\r",'completo
 
 // Remplaces:
 
- 
-
 $html_anime = str_replace('="/img','="https://www1.gogoanime.sh/img',$html_anime);
 
-
 $html_anime = str_replace('"/category','"category.php?url=/category',$html_anime);
+$html_anime = str_replace('"/genre','"category.php?url=/genre',$html_anime);
 $html_anime = str_replace('"/','"page.php?url=/',$html_anime);
-
 
 
 echo $html_anime;
