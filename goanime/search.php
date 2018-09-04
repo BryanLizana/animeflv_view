@@ -1,13 +1,11 @@
 
-<form action="./search.php" method="get">
 
-<input type="text" name="keyword" id="">
-<input type="submit" value="Search Go">
-</form>
 <?php  
+echo  '<a href="index.php">Home</a><br><br><br>';
+
 require_once('../acore/class.anime.php');
 
-$html_anime = classAnime::get_url_contents('https://www1.gogoanime.sh');
+$html_anime = classAnime::get_url_contents('https://www1.gogoanime.sh//search.html?keyword='.$_REQUEST['keyword'].'&page='.$_REQUEST['page'].'');
 // $no = array('Login','Sign up');
 $html_anime = classAnime::getTag($html_anime,'<ul','</ul>',"<br> \n\r",'completo',$no);
 $html_anime = classAnime::removeTag($html_anime,'TEXTOBEFOREXXX','TEXTOAFTERXXX');
