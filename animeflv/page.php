@@ -79,6 +79,22 @@ initShowDivTwo(null);
 
    </script>
 
+<script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v3.1&appId=1730508916998105&autoLogAppEvents=1';
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+</script>
+<div class="WdgtCn">
+    <div class="Top">
+        <div class="Title">Comentarios</div>
+    </div>
+    <div class="fb-comments" data-href="https://animeflv.net<?php echo $_GET['url'] ?>" style="width:100%;" width="100%" data-numposts="20"></div>
+</div>
+
+
 <?php 
 require_once('./templates/footer.php');
 ?>
