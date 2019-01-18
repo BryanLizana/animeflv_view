@@ -8,8 +8,13 @@ classAnime::markerView($_REQUEST['url']);
 
 $html_anime = classAnime::get_url_contents('https://animeflv.net'.$_REQUEST['url']);
 
-$html_anime_iframe = classAnime::getTag($html_anime,'<iframe','</iframe>');
+$html_anime_iframe = classAnime::getTag($html_anime,'<iframe','<\/iframe>');
 
+$html_anime_iframe =  str_replace('\/','/',$html_anime_iframe);
+$html_anime_iframe =  str_replace('\"','"',$html_anime_iframe);
+// $array_iframe =  explode('XXXXXXXXOOO',$html_anime_iframe);
+// echo '<pre>'; var_dump( json_decode($array_iframe[0],true) ); echo '</pre>'; die;/***HERE***/ 
+// echo '<pre>'; var_dump( $html_anime_iframe ); echo '</pre>'; die;/***HERE***/ 
 $html_anime = classAnime::removeTag($html_anime,'<script','</script>');
 
 
