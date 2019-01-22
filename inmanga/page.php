@@ -15,7 +15,6 @@ require_once('../acore/class.anime.php');
 $html_anime = classAnime::get_url_contents('https://inmanga.com/chapter/chapterIndexControls?identification='.$_REQUEST['identificadorPage']);
 
 
-
 // $pageid = classAnime::getTag($html_anime,'selected="selected" value="','">'.$_REQUEST['page'].'</option>',"",'parte');
 $url_name = classAnime::getTag($html_anime,'href="/ver/manga/',$_REQUEST['identificador'],"",'parte');
 

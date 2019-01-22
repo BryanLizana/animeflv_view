@@ -15,20 +15,6 @@ $json_anime =  file_get_contents('https://inmanga.com/OnMangaQuickSearch/Source/
 $array = json_decode($json_anime,true);
 
 
-echo ' <center>
-<a style="background-color: #4CAF50;
-border: none;
-color: white;
-padding: 15px 32px;
-margin: 10px;
-text-align: center;
-text-decoration: none;
-display: inline-block;
-font-size: 25px;
-width: 400px;
-padding: 5px;" href="./index-img.php">
-Modo Index Con Images¡¡ <br>(carga más datos, creo :\'v)</a></center><br>';
-
 foreach ($array as  $value) {
   
     // https://inmanga.com/ver/manga/Another/6ca12a70-53ef-4da8-b3dd-db7c72775e14
@@ -48,6 +34,7 @@ foreach ($array as  $value) {
     font-size: 25px;
     width: 400px;
     padding: 5px;" href="'.$url.'">
+    <center><img src="https://inmanga.com'.$value['ThumbnailPath'].'" style="width: 200px;"></center>
    '.$value['Name'].'</a></center><br>';
 }
 ?>
