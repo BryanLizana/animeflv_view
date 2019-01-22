@@ -17,6 +17,7 @@ $html_anime = classAnime::get_url_contents('https://inmanga.com/chapter/chapterI
 
 
 // $pageid = classAnime::getTag($html_anime,'selected="selected" value="','">'.$_REQUEST['page'].'</option>',"",'parte');
+$url_name = classAnime::getTag($html_anime,'href="/ver/manga/',$_REQUEST['identificador'],"",'parte');
 
 
 $html_anime = classAnime::getTag($html_anime,'Página:','</div>',"<br>",'parte');
@@ -42,7 +43,7 @@ foreach ($array as  $value) {
     $code = $array_values[0];
     $number_page = $array_values[1];
 
-    $file = 'https://inmanga.com/images/manga/'.$_REQUEST['name'].'/chapter/'.$_REQUEST['page'].'/page/'.$number_page.'/'.$code;
+    $file = 'https://inmanga.com/images/manga/'.$url_name.'/chapter/'.$_REQUEST['page'].'/page/'.$number_page.'/'.$code;
     // echo '<center><a  style="    background-color: #4CAF50;
     // border: none;
     // color: white;
