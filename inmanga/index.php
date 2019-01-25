@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Me InManga.com </title>
 </head>
 <body style="margin:  16px;">
 <?php  
@@ -15,7 +16,7 @@ $json_anime =  file_get_contents('https://inmanga.com/OnMangaQuickSearch/Source/
 $array = json_decode($json_anime,true);
 
 
-echo ' <center>
+echo '<center>
 <a style="background-color: #4CAF50;
 border: none;
 color: white;

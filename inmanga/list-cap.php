@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><?php echo $_REQUEST['page'] .' | '. $_REQUEST['MangaNameFull'] ?></title>
 </head>
 <body style="margin:  16px;">
 <?php  
@@ -68,6 +69,22 @@ sort($list, SORT_NATURAL | SORT_FLAG_CASE);
 foreach ($list as $key => $var_a) {
     echo $var_a ;
 }
+
+
+echo '<hr>';
+
+echo '<a style="    background-color: black;
+border: none;
+color: white;
+padding: 15px 32px;
+margin: 10px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 22px;
+width: 400px;
+padding: 5px;"  href="remove-manga.php?identificador='.$_REQUEST['identificador'].'">Remove manga</a><br>';
+
 
 ?>
 </body>
