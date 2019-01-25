@@ -34,7 +34,7 @@ text-decoration: none;
 display: inline-block;
 font-size: 22px;
 width: 400px;
-padding: 5px;" target="__black" href="./mark-manga.php?identificador='.$_REQUEST['identificador'].'&page='.$_REQUEST['page'].'&name='.str_replace(' ','-',$_REQUEST['name']).'">Make manga</a><br>';
+padding: 5px;"  href="./mark-manga.php?identificador='.$_REQUEST['identificador'].'&page='.$_REQUEST['page'].'&name='.str_replace(' ','-',$_REQUEST['name']).'">Make manga</a><br>';
 
 echo '<a style="    background-color: #4CAF50;
 border: none;

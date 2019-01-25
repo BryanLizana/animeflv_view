@@ -50,7 +50,7 @@ echo '<center><h3>'.$_REQUEST['MangaNameFull'] .'</h3></center><br>';
 foreach ($array as  $Number) {
 
     $url = "page.php?identificadorPage=".$Number['Identification']."&page=".$Number['FriendlyChapterNumber']."&name=".$_REQUEST['MangaNameFull']."&identificador=".$_REQUEST['identificador'];
-    $var_a = '<div  id="'.$Number['Number'].'" ><center><a  style="    background-color: #4CAF50;
+    $var_a = '<div  id="'.$Number['Number'].'" ><center><a  target="__black" style="    background-color: #4CAF50;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -61,10 +61,7 @@ foreach ($array as  $Number) {
     font-size: 22px;
     width: 400px;
     padding: 5px;" href="'.$url.'">'.$Number['FriendlyChapterNumber'].'</a></center> </div><br>';
-    // $list[$value['FriendlyChapterNumberUrl']] = $value['Identification'];
-
     $list[] =  "Page".$Number['Number'].$var_a  ;
-
 }
 
 sort($list, SORT_NATURAL | SORT_FLAG_CASE);

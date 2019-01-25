@@ -18,5 +18,7 @@ if ($_REQUEST['identificador']) {
     fwrite($myfile, json_encode( $content_file));
     fclose($myfile);
 
+    header('location: list-cap.php?identificador='.$_REQUEST['identificador']."&MangaNameFull=".$_REQUEST['name'] );
+    
     // return to home
 }
