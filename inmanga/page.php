@@ -34,6 +34,18 @@ text-decoration: none;
 display: inline-block;
 font-size: 22px;
 width: 400px;
+padding: 5px;" target="__black" href="./mark-manga.php?identificador='.$_REQUEST['identificador'].'&page='.$_REQUEST['page'].'&name='.str_replace(' ','-',$_REQUEST['name']).'">Make manga</a><br>';
+
+echo '<a style="    background-color: #4CAF50;
+border: none;
+color: white;
+padding: 15px 32px;
+margin: 10px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 22px;
+width: 400px;
 padding: 5px;" href="list-cap.php?identificador='.$_REQUEST['identificador']."&MangaNameFull=".str_replace(' ','-',$_REQUEST['name']).'">Back</a><br>';
 echo '<center><h3>Capítulo'.$_REQUEST['page'].'</h3></center><br>';
 foreach ($array as  $value) {
@@ -92,4 +104,22 @@ foreach ($array as  $value) {
 </script>
 </body>
  
+<?php 
 
+if (!empty($_REQUEST['identificador']) && !empty($_REQUEST['page'])) {
+    $content_file = file_get_contents("json/view.json");
+    $myfile = fopen("json/view.json", 'w+') or die('nop');
+    $data_old =  json_decode($content_file,true);
+    for ($i=0; ( !empty($data_old) && $i < count($data_old)); $i++) { 
+        if ($data_old[$i]['manga'] == $_REQUEST['identificador']) {
+            $data_old[$i]['page'] = $_REQUEST['page'];           
+         }
+         break;
+         break;
+    }
+
+    fwrite($myfile, json_encode($data_old));
+    fclose($myfile);
+}
+
+?>

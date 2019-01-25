@@ -1,13 +1,14 @@
 <?php 
-if (!empty($_REQUEST['url_jk'])) {
+// if (!empty($_REQUEST['url_jk'])) {
 
     require_once('../acore/class.anime.php');
 
+    $_REQUEST['url_jk']= 'https://jkanime.net/boruto-naruto-next-generations/90/';
     $html_anime = classAnime::get_url_contents($_REQUEST['url_jk']);
+
     $html_anime = classAnime::getTag($html_anime,'<iframe','</iframe>');
     $html_anime = classAnime::getTag($html_anime,'src="','"','<br>','single');
     $html_anime =  explode('<br>',$html_anime);
-
     foreach ($html_anime as $value) {
         if (strpos($value,'u=stream')) {
              $content_value = classAnime::get_url_contents($value);
@@ -28,4 +29,4 @@ if (!empty($_REQUEST['url_jk'])) {
         }
     }
 
-}
+// }

@@ -31,12 +31,8 @@ font-size: 22px;
 width: 400px;
 padding: 5px;" href="index.php">Back</a><br>';
 
-
-echo '<center><h3>'.$_REQUEST['MangaNameFull'] .'</h3></center><br>';
-foreach ($array as  $Number) {
-
-    $url = "page.php?identificadorPage=".$Number['Identification']."&page=".$Number['FriendlyChapterNumber']."&name=".$_REQUEST['MangaNameFull']."&identificador=".$_REQUEST['identificador'];
-    $var_a = '<center><a  style="    background-color: #4CAF50;
+if (!empty($_REQUEST['page'])) {
+    echo '<a style="background-color: #4CAF50;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -46,7 +42,25 @@ foreach ($array as  $Number) {
     display: inline-block;
     font-size: 22px;
     width: 400px;
-    padding: 5px;" href="'.$url.'">'.$Number['FriendlyChapterNumber'].'</a></center><br>';
+    padding: 5px;" href="#'.$_REQUEST['page'].'">Read when</a>';
+}
+
+
+echo '<center><h3>'.$_REQUEST['MangaNameFull'] .'</h3></center><br>';
+foreach ($array as  $Number) {
+
+    $url = "page.php?identificadorPage=".$Number['Identification']."&page=".$Number['FriendlyChapterNumber']."&name=".$_REQUEST['MangaNameFull']."&identificador=".$_REQUEST['identificador'];
+    $var_a = '<div  id="'.$Number['Number'].'" ><center><a  style="    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    margin: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    width: 400px;
+    padding: 5px;" href="'.$url.'">'.$Number['FriendlyChapterNumber'].'</a></center> </div><br>';
     // $list[$value['FriendlyChapterNumberUrl']] = $value['Identification'];
 
     $list[] =  "Page".$Number['Number'].$var_a  ;
