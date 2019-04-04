@@ -26,7 +26,8 @@ text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size: 25px;
-width: 400px;
+max-width: 400px;
+width:90%;
 padding: 5px;" href="./index-img.php">
 Modo Index Con Images¡¡ <br>(carga más datos, creo :\'v)</a></center><br>';
 
@@ -47,7 +48,8 @@ foreach ($content_file as $key ) {
     text-decoration: none;
     display: inline-block;
     font-size: 25px;
-    width: 400px;
+    max-width: 400px;
+    width:90%;
     padding: 5px;" href="'.$url.'&page='.$key['page'].'">
    '.$key['name']." Page:".$key['page'].'</a></center><br>';
 }
@@ -72,7 +74,8 @@ foreach ($array as  $value) {
     text-decoration: none;
     display: inline-block;
     font-size: 25px;
-    width: 400px;
+    max-width: 400px;
+    width:90%;
     padding: 5px;" href="'.$url.'">
    '.$value['Name'].'</a></center><br>';
 }

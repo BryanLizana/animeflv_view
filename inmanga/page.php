@@ -1,11 +1,13 @@
-
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
     <title><?php echo $_REQUEST['page'] . $_REQUEST['MangaNameFull']?></title>
 
 </head>
@@ -35,7 +37,8 @@ text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size: 22px;
-width: 400px;
+max-width: 400px;
+width:90%;
 padding: 5px;"  href="./mark-manga.php?identificador='.$_REQUEST['identificador'].'&page='.$_REQUEST['page'].'&name='.str_replace(' ','-',$_REQUEST['name']).'">Make manga</a><br>';
 
 echo '<a style="    background-color: #4CAF50;
@@ -47,7 +50,8 @@ text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size: 22px;
-width: 400px;
+max-width: 400px;
+width:90%;
 padding: 5px;" href="list-cap.php?identificador='.$_REQUEST['identificador']."&MangaNameFull=".str_replace(' ','-',$_REQUEST['name']).'">Back</a><br>';
 echo '<center><h3>Capítulo'.$_REQUEST['page'].'</h3></center><br>';
 foreach ($array as  $value) {
@@ -67,23 +71,26 @@ foreach ($array as  $value) {
     // display: inline-block;
     // font-size: 22px;
     // width: 400px;
-    // padding: 5px;" target="__black" href="'.$file.'">'.$number_page.'</a></center><br>';
+    // padding: 5px;"  href="'.$file.'">'.$number_page.'</a></center><br>';
 
     $list[] = array('link'=>$file,'number'=>$number_page);
 }
 
 ?>
 <div class="w3-content w3-display-container">
+
+<div style="text-align: right;margin-right: 16px;">
+<button class="w3-button w3-black "  onclick="plusDivs(-1)"  style="padding: 9px;"   >&#10094;</button>
+<button class="w3-button w3-black " onclick="plusDivs(1)"  style="padding: 9px;" >&#10095;</button>
+</div>
 <?php foreach ($list as $link): ?>
 
-
     <img class="mySlides" src="<?php echo $link['link'] ?>" style="width:100%">
- 
 
 <?php endforeach ?>
 
-<button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)" style="color: red;">&#10094;</button>
-  <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+  <!-- <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)" style="color: red;">&#10094;</button>
+  <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button> -->
 </div>
 <script>
     var slideIndex = 1;
@@ -114,14 +121,15 @@ if (!empty($_REQUEST['identificador']) && !empty($_REQUEST['page'])) {
     $data_old =  json_decode($content_file,true);
     for ($i=0; ( !empty($data_old) && $i < count($data_old)); $i++) { 
         if ($data_old[$i]['manga'] == $_REQUEST['identificador']) {
-            $data_old[$i]['page'] = $_REQUEST['page'];           
+            $data_old[$i]['page'] = $_REQUEST['page']; 
+            break;
          }
-         break;
-         break;
     }
 
     fwrite($myfile, json_encode($data_old));
     fclose($myfile);
 }
+$_SESSION['page'] = $_REQUEST['page'];
+
 
 ?>
