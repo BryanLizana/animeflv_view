@@ -1,5 +1,8 @@
 <?php 
 session_start();
+$_SESSION['list_url_pages'] = null;
+$_SESSION['list_url_pages_btns'] = null;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,7 +60,7 @@ echo '</center>';
 echo '<center><h3>'.$_REQUEST['MangaNameFull'] .'</h3></center><br>';
 foreach ($array as  $Number) {
 
-    $url = "page.php?identificadorPage=".$Number['Identification']."&page=".$Number['FriendlyChapterNumber']."&name=".$_REQUEST['MangaNameFull']."&identificador=".$_REQUEST['identificador'];
+    $url = "preview.php?identificadorPage=".$Number['Identification']."&page=".$Number['FriendlyChapterNumber']."&name=".$_REQUEST['MangaNameFull']."&identificador=".$_REQUEST['identificador'];
     // $preview = "preview.php?identificadorPage=".$Number['Identification']."&page=".$Number['FriendlyChapterNumber']."&name=".$_REQUEST['MangaNameFull']."&identificador=".$_REQUEST['identificador'];
     $var_a = '<div  id="'.$Number['Number'].'" ><center>
     <a   style="    background-color: #4CAF50;

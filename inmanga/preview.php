@@ -1,5 +1,8 @@
 <?php 
 session_start();
+$_SESSION['list_url_pages'] = null;
+$_SESSION['list_url_pages_btns'] = null;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +30,9 @@ $html_anime = classAnime::getTag($html_anime,'Página:','</div>',"<br>",'parte')
 $html_anime = classAnime::getTag($html_anime,'<option value="','</option>',"<br>",'parte');
 
 $array =  explode('<br>',$html_anime);
-echo '<center>';
+$echo_string = '<center>';
 
-echo '<a style="    background-color: #4CAF50;
+$echo_string .= '<a style="    background-color: #4CAF50;
 border: none;
 color: white;
 padding: 15px 32px;
@@ -42,7 +45,7 @@ max-width: 400px;
 width:90%;
 padding: 5px;"  href="./mark-manga.php?identificador='.$_REQUEST['identificador'].'&page='.$_REQUEST['page'].'&name='.str_replace(' ','-',$_REQUEST['name']).'">Make manga</a><br>';
 
-echo '<a style="    background-color: #4CAF50;
+$echo_string .= '<a style="    background-color: #4CAF50;
 border: none;
 color: white;
 padding: 15px 32px;
@@ -55,9 +58,9 @@ max-width: 400px;
 width:90%;
 padding: 5px;" href="list-cap.php?identificador='.$_REQUEST['identificador']."&MangaNameFull=".str_replace(' ','-',$_REQUEST['name']).'">Back</a><br>';
 
-echo '</center>';
+$echo_string .= '</center>';
 
-echo '<center><h3>Capítulo'.$_REQUEST['page'].'</h3></center><br>';
+$echo_string .= '<center><h3>Capítulo'.$_REQUEST['page'].'</h3></center><br>';
 foreach ($array as  $value) {
 
     $array_values = explode('">',$value);
@@ -78,54 +81,14 @@ foreach ($array as  $value) {
     // padding: 5px;"  href="'.$file.'">'.$number_page.'</a></center><br>';
 
     $list[] = array('link'=>$file,'number'=>$number_page);
+
+    
+    $_SESSION['list_url_pages'] = $list;
+    $_SESSION['list_url_pages_btns'] = $echo_string;
+
+    
+
 }
-
-?>
-<div class="w3-content w3-display-container">
-
-
-<div style="position: absolute;">
-<button class="w3-button w3-black " onclick="plusDivs(-1)" style="padding: 9px;">❮</button>
-<button class="w3-button w3-black " onclick="plusDivs(1)" style="padding: 9px;">❯</button>
-</div>
-
-<div style="text-align: right;">
-<button class="w3-button w3-black "  onclick="plusDivs(-1)"  style="padding: 9px;"   >&#10094;</button>
-<button class="w3-button w3-black " onclick="plusDivs(1)"  style="padding: 9px;" >&#10095;</button>
-</div>
-<?php foreach ($list as $link): ?>
-
-    <img class="mySlides" src="<?php echo $link['link'] ?>" style="width:100%">
-
-<?php
-break;
-endforeach ?>
-
-  <!-- <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)" style="color: red;">&#10094;</button>
-  <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button> -->
-</div>
-<script>
-    var slideIndex = 1;
-    showDivs(slideIndex);
-
-    function plusDivs(n) {
-    showDivs(slideIndex += n);
-    }
-
-    function showDivs(n) {
-    var i;
-    var x = document.getElementsByClassName("mySlides");
-    if (n > x.length) {slideIndex = 1} 
-    if (n < 1) {slideIndex = x.length} ;
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none"; 
-    }
-    x[slideIndex-1].style.display = "block"; 
-    }
-</script>
-</body>
- 
-<?php 
 
 if (!empty($_REQUEST['identificador']) && !empty($_REQUEST['page'])) {
     $content_file = file_get_contents("json/view.json");
@@ -143,5 +106,8 @@ if (!empty($_REQUEST['identificador']) && !empty($_REQUEST['page'])) {
 }
 $_SESSION['page'] = $_REQUEST['page'];
 
+
+
+header('location: ./sub-page.php?sub_page=0');
 
 ?>

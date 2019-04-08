@@ -1,5 +1,9 @@
 <?php 
 session_start();
+$_SESSION['list_url_pages'] = null;
+$_SESSION['list_url_pages_btns'] = null;
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
