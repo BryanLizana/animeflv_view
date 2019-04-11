@@ -1,9 +1,9 @@
 <?php 
 echo  '<a href="index.php">Home</a><br><br><br>';
-echo  'https://www5.gogoanime.in'.$_REQUEST['url'].'<br>';
+echo  'https://www5.gogoanime.tv'.$_REQUEST['url'].'<br>';
 require_once('../acore/class.anime.php');
 
-$html_anime = classAnime::get_url_contents('https://www5.gogoanime.in'.$_REQUEST['url']);
+$html_anime = classAnime::get_url_contents('https://www5.gogoanime.tv'.$_REQUEST['url']);
 
 $url_rap = classAnime::getTag($html_anime,'https://www.rapidvideo.com','">');
 
