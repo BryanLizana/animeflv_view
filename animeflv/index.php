@@ -6,7 +6,7 @@ $html_anime = classAnime::get_url_contents('https://animeflv.net/');
 $html_anime = classAnime::removeTag($html_anime,'<img','>');
 
 $no =  array('Directorio Anime','Temas para Wordpress','Cuevana','Términos y Condiciones','Politica y Privacidad','Política de Privacidad',
-            'AnimeFLV');
+            'AnimeFLV','Registrate','contraseña','Inicio');
 
 $html_anime = classAnime::getTag($html_anime,'<a ','</a>',"<br> \n\r",'completo',$no);
 $html_anime = classAnime::removeTag($html_anime,'TEXTOBEFOREXXX','TEXTOAFTERXXX');
@@ -18,8 +18,8 @@ $html_anime = str_replace('/browse','#',$html_anime);
 $html_anime = str_replace('/anime/','interna.php?url=/anime/',$html_anime);
 
 $html_anime_array_a = explode('<br>',$html_anime);
-
 $onlyOne= true;
+
 for ($i=0; $i < count($html_anime_array_a) ; $i++) { 
     if (strpos($html_anime_array_a[$i],"VER ANIME") && $onlyOne) {
         $html_anime_array_a[$i - 1] =  "XXXXXXXXXXXX" .  $html_anime_array_a[$i - 1] ;
@@ -32,13 +32,15 @@ for ($i=0; $i < count($html_anime_array_a) ; $i++) {
     
 }
 
-$html_anime_array_a =  implode('<br>',$html_anime_array_a);
-$html_anime_array_a =  explode('XXXXXXXXXXXX',$html_anime_array_a);
 
+
+$html_anime_array_a =  implode('<br>',$html_anime_array_a);
+
+$html_anime_array_a =  explode('XXXXXXXXXXXX',$html_anime_array_a);
 $i = 1;
 foreach ($html_anime_array_a as $html_anime) {
     if (!empty($html_anime) && $i > 1 ) {
-        echo '<button onclick="ShowBox'.$i.'(event)" class=" btn-success">Click Me to View '.$array_name[$i].'</button>';
+        echo '<button onclick="ShowBox'.$i.'(event)" class=" btn-success">Click Me to View '.$i.'</button>';
         echo '<div id="box'.$i.'">';   
         echo $html_anime;
         echo '</div>';

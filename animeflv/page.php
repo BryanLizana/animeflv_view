@@ -8,10 +8,11 @@ classAnime::markerView($_REQUEST['url']);
 
 $html_anime = classAnime::get_url_contents('https://animeflv.net'.$_REQUEST['url']);
 
-$html_anime_iframe = classAnime::getTag($html_anime,'<iframe','<\/iframe>');
+// $html_anime_iframe = classAnime::getTag($html_anime,'<iframe','<\/iframe>');
 
-$html_anime_iframe =  str_replace('\/','/',$html_anime_iframe);
-$html_anime_iframe =  str_replace('\"','"',$html_anime_iframe);
+// $html_anime_iframe =  str_replace('\/','/',$html_anime_iframe);
+// $html_anime_iframe =  str_replace('\"','"',$html_anime_iframe);
+
 // $array_iframe =  explode('XXXXXXXXOOO',$html_anime_iframe);
 // echo '<pre>'; var_dump( json_decode($array_iframe[0],true) ); echo '</pre>'; die;/***HERE***/ 
 // echo '<pre>'; var_dump( $html_anime_iframe ); echo '</pre>'; die;/***HERE***/ 
@@ -19,12 +20,12 @@ $html_anime = classAnime::removeTag($html_anime,'<script','</script>');
 
 
 
-if (strpos($html_anime,'a href="/ver') &&  (strpos($html_anime,'SIGUIENTE') ||  strpos($html_anime,'ANTERIOR')   )) {
-    $next = classAnime::getTag($html_anime,'<a href="/ver/','SIGUIENTE</a>',null,'completo',null,true);
-    if ($next == '<a href="/ver') {
-        $next = classAnime::getTag($html_anime,'<a href="/ver/','ANTERIOR</a>',null,'completo',null,true);    
-    }
-}
+// if (strpos($html_anime,'a href="/ver') &&  (strpos($html_anime,'SIGUIENTE') ||  strpos($html_anime,'ANTERIOR')   )) {
+//     $next = classAnime::getTag($html_anime,'<a href="/ver/','SIGUIENTE</a>',null,'completo',null,true);
+//     if ($next == '<a href="/ver') {
+//         $next = classAnime::getTag($html_anime,'<a href="/ver/','ANTERIOR</a>',null,'completo',null,true);    
+//     }
+// }
 
 $html_anime = classAnime::getTag($html_anime,'<table','</table>');
 $html_anime = classAnime::getTag($html_anime,'<a','</a>');
@@ -33,14 +34,14 @@ $descargas_url =  array_unique($descargas_url);
 $descargas_url =  implode('',$descargas_url);
 
 
-$html_anime = classAnime::startIframe($html_anime_iframe);
+// $html_anime = classAnime::startIframe($html_anime_iframe);
 
-$next = str_replace('/ver/','page.php?url=/ver/',$next);
-$next = str_replace('/browse','#',$next);
-$next = str_replace('/anime/','interna.php?url=/anime/',$next);
+// $next = str_replace('/ver/','page.php?url=/ver/',$next);
+// $next = str_replace('/browse','#',$next);
+// $next = str_replace('/anime/','interna.php?url=/anime/',$next);
 
-echo $next;
-echo $html_anime;
+// echo $next;
+// echo $html_anime;
 ?>
 <!-- Temporalmente cerrado -->
 <button onclick="initShowDivOne(event)" class=" btn-success">Click Me to View Descargas</button>

@@ -84,7 +84,7 @@ class classAnime
         return $textohtml;
     }
 
-    public function getTag($textohtml,$text_before,$text_after = false,$tagUnidor= "<br> \n\r", $mode = 'completo', $menosSiTieneThisWord = false,$debug =  false)
+    static function getTag($textohtml,$text_before,$text_after = false,$tagUnidor= "<br> \n\r", $mode = 'completo', $menosSiTieneThisWord = false,$debug =  false)
     {
 
         $textohtml = " ".$textohtml." ";
@@ -356,7 +356,7 @@ class classAnime
       }
     }
 
-    public function markerView($urlView)
+    static function markerView($urlView)
     {
         $urlView_array = explode("/",$urlView);
         $view_anime_name = $urlView_array[count($urlView_array) -1 ];
